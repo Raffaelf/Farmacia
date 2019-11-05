@@ -91,7 +91,7 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 									</div>
 									<br>
 
-									<label>Dados da farmácia</label>
+									<!--label>Dados da farmácia</label>
 									<div class="form-group">
 										<input type="text" name="business" id="business" tabindex="1" class="form-control" placeholder="Razão social" value="">
 									</div>
@@ -125,7 +125,7 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Cadastrar">
 											</div>
 										</div>
-									</div>
+									</div-->
 								</form>
 
 							</div>
