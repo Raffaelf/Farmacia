@@ -1,9 +1,10 @@
 <?php
 session_start();
-    if(isset($_SESSION['nome']) && isset($_SESSION['email'])){
-        header('Location: index.php');
-        exit;
-    }
+
+if(isset($_SESSION['session_farma'])) {
+	header('Location: index.php');
+	exit;
+}
 ?>
 <?php
  
@@ -16,17 +17,20 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 <!DOCTYPE html>
 <html>
 <head>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="js/mascara.min.js"></script>
-<link href="css/styleLogin.css" rel="stylesheet">
-<script src="js/styleLogin.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+		<meta charset="utf-8">
+		<title>Logar no sistama</title>
+
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+		<link href="assets/css/styleLogin.css" rel="stylesheet">
+		
+		<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+		<script src="assets/js/mascara.min.js"></script>
+		<script src="assets/js/styleLogin.js"></script>
 </head>
 <body>
 <div class="container">
-    	<div class="row">
+  	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div class="panel panel-login">
 					<div class="panel-heading">
@@ -43,7 +47,8 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-								<form id="login-form" action="recebeLogin.php" method="post" role="form" style="display: block;">
+
+								<form id="login-form" action="processa_login.php" method="post" role="form" style="display: block;">
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de usuário" value="<?=$email?>" required>
 									</div>
@@ -71,7 +76,9 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 										</div>
 									</div>
 								</form>
-								<form id="register-form" action="recebeRegistro.php" method="post" role="form" style="display: none;">
+
+								<form id="register-form" action="processa_registro.php" method="post" role="form" style="display: none;">
+									
 									<label>Dados de acesso</label>
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de usuário" value="">
@@ -83,6 +90,7 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 										<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar senha">
 									</div>
 									<br>
+
 									<label>Dados da farmácia</label>
 									<div class="form-group">
 										<input type="text" name="business" id="business" tabindex="1" class="form-control" placeholder="Razão social" value="">
@@ -97,6 +105,7 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 										<input type="text" name="telefone" id="telefone" tabindex="1" class="form-control" placeholder="Telefone" value="" required onkeyup="mascara('(##) ####-####',this,event,true)" maxlength="14">
 									</div>
 									<br>
+
 									<label>Endereço da farmácia</label>
 									<div class="form-group">
 										<input type="text" name="rua" id="rua" tabindex="1" class="form-control" placeholder="Rua" value="" required>
@@ -118,6 +127,7 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 										</div>
 									</div>
 								</form>
+
 							</div>
 						</div>
 					</div>
@@ -125,5 +135,6 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 			</div>
 		</div>
 	</div>
-	</body>
+
+</body>
 </html>

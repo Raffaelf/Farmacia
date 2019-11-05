@@ -1,6 +1,6 @@
 <?php
 session_start();
-    if(!isset($_SESSION['nome']) && !isset($_SESSION['email'])){
+    if(!isset($_SESSION['session_farma'])) {
         header('Location: login.php');
         exit;
     }
@@ -8,12 +8,15 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
+    <title>Área administrativa</title>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="assets/css/styleAdmin.css" rel="stylesheet">
+    
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-    <link href="css/styleAdmin.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="js/styleAdmin.js"></script>
 </head>
 
