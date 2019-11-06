@@ -1,81 +1,66 @@
 <?php 
-session_start();
- 
-$usuario = (isset($_POST['username'])) ? $_POST['username'] : '';
-$senha = (isset($_POST['password'])) ? $_POST['password'] : '';
-$lembrete = (isset($_POST['remember'])) ? $_POST['remember'] : '';
- 
-if (!empty($usuario) && !empty($senha)){
+		session_start();
+		
+		$usuario = (isset($_POST['username'])) ? $_POST['username'] : '';
+		$senha = (isset($_POST['password'])) ? $_POST['password'] : '';
+		$lembrete = (isset($_POST['remember'])) ? $_POST['remember'] : '';
+		
+		/* 
+		 * Redireciona para login caso um dos campos esteja vazio,
+		 * e retorna uma variavel 'i' via GET para informar que houve uma falha no login
+		 */
+		if (empty($usuario) || empty($senha)){		
+				header('Location: login.php?i=1');
+				exit;
+		}
 
-		$login = array(
-				'login' => $usuario, 
-				'senha' => $senha
-		);
+		// Cria um array com dados do login e converte para JSON
+		$login = array('login' => $usuario, 'senha' => $senha);
+		$loginJSON = json_encode($login);  
 
-		$loginJson = json_encode($login);  
-
+		// Configurando a requisicao
 		$ch = curl_init('http://localhost:8080/administrador/autenticar');                                                                      
 					curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-					curl_setopt($ch, CURLOPT_POSTFIELDS, $loginJson);                                                                  
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $loginJSON);                                                                  
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($ch, CURLOPT_VERBOSE, 1);
 					curl_setopt($ch, CURLOPT_HEADER, 1);
 					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);                                                                      
 					curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
 						'Content-Type: application/json',                                                                                
-						'Content-Length: ' . strlen($loginJson))                                                                       
+						'Content-Length: ' . strlen($loginJSON))                                                                       
 					);                                                                                                                   
-			
-		$result = curl_exec($ch);
 		
+		$response = curl_exec($ch);
 		
+		// Extraindo o header da resposta em STRING da API
 		$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-		$header = substr($result, 0, $headerSize);
+		$header = substr($response, 0, $headerSize);
 
-		echo $header;
+		/* 
+		 * Quebrando a String do header para pegar o STATOS da requisicao e o TOKEN
+		 * o resultado é um array
+		 * onde na posicao 1 terá o STATUS
+		 * e na posicao 4 o TOKEN, caso a requisiçao tenha STAUTS 200
+		 */
+		$header = explode(' ', $header);
 
-		$infoHeader = explode(' ', $header);
-
-		echo "<pre>";
-		var_dump($infoHeader);
-		echo "</pre>";
-
-		//Para pegar apenas o token quebrar a string nos espaços
-
-			// if($result != true){
-			// 	echo "<script>alert('Usuário ou senha incorretos!');</script>";
-			// 	echo "<script>window.location = '/Farmacia/login.php'</script>";
-			// } else {
-			
-			// 	if(!empty($array)){
-	
-			// 		$_SESSION['login'] = $array['login'];
-			// 		$_SESSION['senha'] = $array['senha'];
-			// 		$_SESSION['logado'] = TRUE;
-	
-			// 		if($lembrete == 'SIM'){
-	
-			//    			$expira = time() + 60*60*24*30; 
-			//    			setCookie('CookieLembrete', base64_encode('SIM'), $expira);
-			//    			setCookie('CookieEmail', base64_encode($login), $expira);
-			//    			setCookie('CookieSenha', base64_encode($senha), $expira);
-			// 		} else {
+		if($header[1] == "200") {
 				
-			// 	   			setCookie('CookieLembrete');
-			//    			setCookie('CookieEmail');
-			//    			setCookie('CookieSenha');
-			// 		}
-			// 		echo "<script>window.location = '/Admin/index.php'</script>";
-			// 	} else {
-			// 		echo "<script>alert('Erro inesperado!');</script>";
-			// 		echo "<script>window.location = '/Admin/login.php'</script>";
-			// 	}
-			// }
-} else { 
-	echo "<script>alert('Erro!');</script>";
-	header('Location: login.php');
-	exit;
-}
+				$token = $header[4];
+				$_SESSION['session_farma'] = $token;
 
-			//$_SESSION['logado'] = FALSE;
-	    	//echo "<script>window.location = '/Admin/login.php'</script>";
+				// Caso a caixa lembrar senha esteja marcada cria um cookie com validade de 7 dias
+				if($lembrete) {
+					setcookie('cookie_farma', $token, time() + (60 * 24 * 7));
+				}
+
+				header('Location: index.php');
+				exit;
+
+		}
+		else {
+				header('Location: login.php?i=1');
+				exit;
+		}
+?>
