@@ -1,12 +1,8 @@
 <?php
 session_start();
 
-unset($_SESSION['id']);
-unset($_SESSION['nome']);
-unset($_SESSION['email']);
-unset($_SESSION['logado']);
+unset($_SESSION['session_farma']);
+setcookie('cookie_farma', '', 1);
         
 header('Location: login.php');
 exit;
-
-?>

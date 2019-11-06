@@ -1,8 +1,14 @@
 <?php
-session_start();
+    session_start();
+
     if(!isset($_SESSION['session_farma'])) {
         header('Location: login.php');
         exit;
+    }
+
+    // Buscar medicamento pelo nome
+    if(isset($_GET['busca']) && !empty($_GET['busca'])) {
+       
     }
 ?>
 <!DOCTYPE html>
@@ -15,9 +21,9 @@ session_start();
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="assets/css/styleAdmin.css" rel="stylesheet">
     
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="js/styleAdmin.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="assets/js/styleAdmin.js"></script>
 </head>
 
 <body class="home">
@@ -25,13 +31,19 @@ session_start();
         <div class="row display-table-row">
             <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
                 <div class="logo">
-                    <a hef="admin.html"><img src="https://consultaremedios.com.br/assets/logos/logo_default-17ab6834258c29870f364a777d12cca917f79ff88aceb6b9c4f3b89ac8c0a53f.svg" alt="merkery_logo" class="hidden-xs hidden-sm">
+                    <a hef="admin.html">
+                        <img src="https://consultaremedios.com.br/assets/logos/logo_default-17ab6834258c29870f364a777d12cca917f79ff88aceb6b9c4f3b89ac8c0a53f.svg" alt="merkery_logo" class="hidden-xs hidden-sm">
                         <img src="https://consultaremedios.com.br/assets/logos/logo_default-17ab6834258c29870f364a777d12cca917f79ff88aceb6b9c4f3b89ac8c0a53f.svg" alt="merkery_logo" class="visible-xs visible-sm circle-logo">
                     </a>
                 </div>
                 <div class="navi">
                     <ul>
-                        <li class="active"><a href="#"><i class="fas fa-angle-right"></i><span class="hidden-xs hidden-sm">Cadastrar</span></a></li>
+                        <li class="active">
+                            <a href="#">
+                                <i class="fas fa-angle-right"></i>
+                                <span class="hidden-xs hidden-sm">Cadastrar</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -50,8 +62,13 @@ session_start();
                                     </button>
                                 </div>
                             </nav>
+
+                            <!-- Campo de busca -->
                             <div class="search hidden-xs hidden-sm">
-                                <input type="text" placeholder="Buscar Medicamento" id="search">
+                                <form method="get">
+                                    <button type="submit"><img src="assets/img/search.png" alt=""></button>
+                                    <input type="text" placeholder="Buscar Medicamento" name="busca" id="search">
+                                </form>
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -59,7 +76,7 @@ session_start();
                                 <ul class="list-inline header-top pull-right">
                                     <li class="hidden-xs"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">Adicionar Medicamento</a></li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="user-icon.png" alt="user">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="assets/img/user-icon.png" alt="user">
                                             <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
                                             <li>
@@ -82,7 +99,7 @@ session_start();
                 </div>
                 <div class="row" style="padding-top: 80px;">
                     <div class="container">
-                        <div class="row col-md-6 col-md-offset-2 custyle">
+                        <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0">
                             <table class="table table-striped custab">
                                 <thead>
                                     <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
