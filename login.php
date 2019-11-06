@@ -2,18 +2,24 @@
 session_start();
 
 if(isset($_SESSION['session_farma'])) {
-	header('Location: index.php');
-	exit;
+		header('Location: index.php');
+		exit;
+}
+
+// Recuperando dados dos cookies caso existam
+$usuario = '';
+$senha = '';
+$lembrar = '';
+
+if(isset($_COOKIE['cookie_farma'])) {
+		$cookie = explode(' ', $_COOKIE['cookie_farma']);
+
+		$usuario = $cookie[0];
+		$senha = $cookie[1];
+		$lembrar = $cookie[2];
 }
 ?>
-<?php
- 
-$email = (isset($_COOKIE['CookieEmail'])) ? base64_decode($_COOKIE['CookieEmail']) : '';
-$senha = (isset($_COOKIE['CookieSenha'])) ? base64_decode($_COOKIE['CookieSenha']) : '';
-$lembrete = (isset($_COOKIE['CookieLembrete'])) ? base64_decode($_COOKIE['CookieLembrete']) : '';
-$checked = ($lembrete == 'SIM') ? 'checked' : '';
- 
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,48 +54,55 @@ $checked = ($lembrete == 'SIM') ? 'checked' : '';
 						<div class="row">
 							<div class="col-lg-12">
 
+								<!-- Formulario de login -->
 								<form id="login-form" action="processa_login.php" method="post" role="form" style="display: block;">
-									<div class="form-group">
-										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de usuário" value="<?=$email?>" required>
-									</div>
-									<div class="form-group">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Senha" value="<?=$senha?>" required>
-									</div>
-									<div class="form-group text-center">
-										<input type="checkbox" tabindex="3" class="" name="remember" id="remember" value="SIM" <?=$checked?>>
-										<label for="remember"> Lembrar senha</label>
-									</div>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Entrar">
-											</div>
+				
+										<p Style="color: red; font-size: 15px; text-align: center">
+												<?php echo (isset($_GET['i']) ? 'Email e/ou senha inválido!' : ''); ?>
+										</p>
+										
+										<div class="form-group">
+												<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de usuário" value="<?=$usuario?>" required>
 										</div>
-									</div>
-									<div class="form-group">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="text-center">
-													<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Esqueceu a senha?</a>
+										<div class="form-group">
+												<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Senha" value="<?=$senha?>" required>
+										</div>
+										<div class="form-group text-center">
+												<input type="checkbox" tabindex="3" class="" name="remember" id="remember" value="SIM" <?=$lembrar?>>
+												<label for="remember"> Lembrar senha</label>
+										</div>
+										<div class="form-group">
+												<div class="row">
+														<div class="col-sm-6 col-sm-offset-3">
+																<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Entrar">
+														</div>
 												</div>
-											</div>
 										</div>
-									</div>
+										<div class="form-group">
+												<div class="row">
+														<div class="col-lg-12">
+																<div class="text-center">
+																		<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Esqueceu a senha?</a>
+																</div>
+														</div>
+												</div>
+										</div>
 								</form>
 
+								<!-- Formulario de cadastro -->
 								<form id="register-form" action="processa_registro.php" method="post" role="form" style="display: none;">
 									
-									<label>Dados de acesso</label>
-									<div class="form-group">
-										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de usuário" value="">
-									</div>
-									<div class="form-group">
-										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Senha">
-									</div>
-									<div class="form-group">
-										<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar senha">
-									</div>
-									<br>
+										<label>Dados de acesso</label>
+										<div class="form-group">
+												<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nome de usuário" value="">
+										</div>
+										<div class="form-group">
+												<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Senha">
+										</div>
+										<div class="form-group">
+												<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmar senha">
+										</div>
+										<br>
 
 									<!--label>Dados da farmácia </label>
 									<div class="form-group">
