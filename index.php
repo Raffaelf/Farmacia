@@ -6,10 +6,7 @@
         exit;
     }
 
-    // Buscar medicamento pelo nome
-    if(isset($_GET['busca']) && !empty($_GET['busca'])) {
-       
-    }
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -87,7 +84,7 @@
                                                     </p>
                                                     <div class="divider">
                                                     </div>
-                                                    <a href="sair.php" class="view btn-sm active">Sair</a>
+                                                    <a href="sair.php" class="btn btn-sm btn-block btn-primary active">Sair</a>
                                                 </div>
                                             </li>
                                         </ul>

@@ -1,13 +1,31 @@
 body {
 	padding-top: 90px;
 	height: 100vh;
-	background: linear-gradient(45deg, rgba(0,0,0, 0), rgba(0,0,0, .2));
+	background: #f5f5f5;
 }
+
+.message {
+	width: 555px;
+	margin: auto;
+	margin-bottom: 30px;
+	box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+	font-weight: 600;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.message button {
+	border: none;
+	outline: none;
+	background: none;
+	font-weight: 900;
+}
+
 .panel-login {
-	border-color: #ccc;
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-	box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+	box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.2);
 }
 .panel-login>.panel-heading {
 	color: #00415d;

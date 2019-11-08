@@ -573,6 +573,7 @@ header {
 .modal-header.login-header {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+}
 /*Main CSS*/
 
 
@@ -647,10 +648,10 @@ header {
         top: 12px;
     }
     button,
-        html [type="button"],
-        [type="reset"],
-        [type="submit"] {
-            outline: medium none;
+    html [type="button"],
+    [type="reset"],
+    [type="submit"] {
+        outline: medium none;
     }
     .user-dashboard .sales h2 {
         color: #8492af;
@@ -659,68 +660,71 @@ header {
         font-weight: 600;
         margin: 0;
         padding: 13px 0 0;
-}
+    }
     .user-dashboard .btn.btn-secondary.btn-lg.dropdown-toggle > span {
-        font-size: 11px;
-}
+            font-size: 11px;
+    }
     .user-dashboard .sales button {
-        font-size: 11px;
-        padding-right: 23px;
-}  
+            font-size: 11px;
+            padding-right: 23px;
+    }  
     .user-dashboard .sales h2 {
-    font-size: 12px;
-}
-.gutter{
-    padding: 0;
-}
+        font-size: 12px;
+    }
+    .gutter{
+        padding: 0;
+    }
 }
 
 @media only screen and (max-device-width: 992px) {
     header .header-top li {
         padding-left: 20px !important;
         padding-right: 0;
-}
+    }
     header .logo img {
         max-width: 125px !important;
+    }
 }
 
-}
 
 @media only screen and (min-device-width: 767px) and (max-device-width: 998px){
-      .user-dashboard .header-top {
+    
+    .user-dashboard .header-top {
         padding-top: 5px;
-}
+    }
     .user-dashboard .header-rightside {
         display: inline-block;
         float: left;
         width: 100%;
-}
+    }
     .user-dashboard .header-rightside .header-top img {
         max-width: 41px !important;
-} 
+    } 
     .user-dashboard .sales button {
-    font-size: 10px;
-}
+        font-size: 10px;
+    }
     .user-dashboard .btn.btn-secondary.btn-lg.dropdown-toggle > span {
-    font-size: 12px;
-}
+        font-size: 12px;
+    }
+
     .user-dashboard .sales h2 {
-    font-size: 15px;
-}
-}
-@media only screen and (min-device-width:998px) and (max-device-width: 1350px){
-        #navigation .logo img {
-    max-width: 130px;
-    padding: 16px 0 17px;
-    width: 100%;
-}
+        font-size: 15px;
+    }
 }
 
-col-sm-12.centralizar {
-    margin: 0 auto !important;
-    height: auto;
-    width: 100%;
-    text-align: center;
-    float: none !important;
-    position: inherit;
+@media only screen and (min-device-width:998px) and (max-device-width: 1350px){
+    #navigation .logo img {
+        max-width: 130px;
+        padding: 16px 0 17px;
+        width: 100%;
     }
+
+    .col-sm-12.centralizar {
+        margin: 0 auto !important;
+        height: auto;
+        width: 100%;
+        text-align: center;
+        float: none !important;
+        position: inherit;
+    }
+}

@@ -52,7 +52,7 @@
 
 				// Caso a caixa lembrar senha esteja marcada cria um cookie com validade de 7 dias
 				if($lembrete) {
-					setcookie('cookie_farma', $usuario.' '.$senha.' '.$lembrete, time() + (60 * 24 * 7));
+					setcookie('cookie_farma', $usuario.' '.$senha.' '.$lembrete, time() + (60 * 60 * 24 * 7));
 				}
 
 				header('Location: index.php');

@@ -6,16 +6,21 @@ if($_POST['password'] != $_POST['confirm-password']) {
 } else {
     $data = array(
         "cnpj" => $_POST['cnpj'], 
-        "email" => $_POST['email'], 
+        "email" => $_POST['email'],
+        "endereco" => array(
+            "rua" => $_POST['rua'],
+            "numero" => $_POST['numero'],
+            "setor" => $_POST['bairro'],
+            "latitude" => $_POST['latitude'],
+            "longitude" => $_POST['longitude']
+        ), 
         "login" => $_POST['username'],
-        "nome" => $_POST['business'], 
+        "nome" => $_POST['nome'], 
         "senha" => $_POST['password'], 
         "telefone" => $_POST['telefone']
     );
 
     $data_string = json_encode($data);  
-
-    echo $data_string;
                                                                                                                     
     $ch = curl_init('http://localhost:8080/administrador/cadastrarfarmacia');                                                                      
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
@@ -26,7 +31,20 @@ if($_POST['password'] != $_POST['confirm-password']) {
         'Content-Length: ' . strlen($data_string))                                                                       
         );                                                                                                                   
                                                                                                                     
-    $retorno = curl_exec($ch);
+    $response = curl_exec($ch);
+    
+    $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+    $header = substr($response, 0, $headerSize);
     curl_close($ch);
+
+	$header = explode(' ', $header);
+
+    if($header[1] == "200" || $header[1] == "201") {
+
+        header('Location: index.php?i=2');
+        exit;
+    }
+    header('Location: index.php');
+    exit;
 }
 ?>
