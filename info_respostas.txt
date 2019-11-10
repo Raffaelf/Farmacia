@@ -1,5 +1,0 @@
-s1 = successo ao cadastrar medicamento
-e1 = falha ao cadastrar medicamento
-
-s2 = sucesso ao alterar medicamento
-e2 = falha ao alterar medicamento

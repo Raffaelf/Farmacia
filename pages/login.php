@@ -27,12 +27,12 @@
 	<title>Logar no sistama</title>
 
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<link href="assets/css/styleLogin.css" rel="stylesheet">
+	<link href="../assets/css/styleLogin.css" rel="stylesheet">
 	
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script src="assets/js/mascara.min.js"></script>
-	<script src="assets/js/styleLogin.js"></script>
+	<script src="../assets/js/mascara.min.js"></script>
+	<script src="../assets/js/styleLogin.js"></script>
 </head>
 <body>
 
@@ -60,9 +60,11 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
-
+								
 								<!-- Formulario de login -->
-								<form id="login-form" action="processa_login.php" method="post" role="form" style="display: block;">
+								<form id="login-form" action="../logar.php" method="post" role="form" style="
+									display: block;
+								">
 				
 									<p Style="color: red; font-size: 15px; text-align: center">
 										<?php echo (isset($_GET['i']) && $_GET['i'] == 1 ? 'Email e/ou senha inválido!' : ''); ?>
@@ -98,7 +100,7 @@
 								</form>
 
 								<!-- Formulario de cadastro -->
-								<form id="register-form" action="processa_registro.php" method="post" role="form" style="display: none;">
+								<form id="register-form" action="../cadastrar_farmacia.php" method="post" role="form" style="display: none;">
 									
 									<label>Dados de acesso</label>
 									<div class="form-group">
