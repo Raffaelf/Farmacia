@@ -55,7 +55,13 @@
                         <li class="active">
                             <a href="#">
                                 <i class="fas fa-angle-right"></i>
-                                <span class="hidden-xs hidden-sm">Cadastrar</span>
+                                <span class="hidden-xs hidden-sm">Medicamentos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="cadastro.php">
+                                <i class="fas fa-angle-right"></i>
+                                <span class="hidden-xs hidden-sm">Novo Medicamento</span>
                             </a>
                         </li>
                     </ul>
@@ -77,18 +83,18 @@
                                 </div>
                             </nav>
 
-                            <!-- Campo de busca -->
+                            <!-- Campo de busca
                             <div class="search hidden-sm">
                                 <form method="get">
                                     <button type="submit"><img src="../assets/img/search.png" alt=""></button>
                                     <input type="text" placeholder="Buscar Medicamento" name="busca" id="search">
                                 </form>
-                            </div>
+                            </div> -->
+                            <h3>Todos os medicamentos</h3>
                         </div>
                         <div class="col-md-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right">
-                                    <li class="hidden-xs"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">Adicionar Medicamento</a></li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="../assets/img/user-icon.png" alt="user">
                                             <b class="caret"></b></a>
@@ -115,15 +121,23 @@
                             Medicamento cadastrado com sucesso!
                             <button id="close-success">X</button>
                         </p>
+                        <p class="alert alert-info" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's2' ? '' : 'style="display:none"'); ?>>
+                            Medicamento excluido com sucesso!
+                            <button id="close-success2">X</button>
+                        </p>
                         <p  class="alert alert-danger" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e1' ? '' : 'style="display:none"'); ?>>
                             Sinto muito, mas não foi possível cadastra o medicamento :(
                             <button id="close-error">X</button>
+                        </p>
+                        <p  class="alert alert-danger 2" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e2' ? '' : 'style="display:none"'); ?>>
+                            Sinto muito, mas não foi possível excluir o medicamento :(
+                            <button id="close-error2">X</button>
                         </p>
                         <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0">
                             <table class="table table-striped table-responsible custab">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Foto</th>
                                         <th>Nome</th>
                                         <th>Forma Farmaceutica</th>
                                         <th>Preço</th>
@@ -134,14 +148,34 @@
                                 <tbody>
                                     <?php foreach($medicamentos as $medicamento): ?>
                                     <tr>
-                                        <td><?php echo $medicamento->id; ?></td>
+                                        <td>
+                                            <?php 
+                                                if(isset($medicamento->imagens[0]->id)) {
+                                                    $id = $medicamento->imagens[0]->id;
+                                                    ?>
+                                                    <img src="http://localhost:8080/imagem/<?php echo $id;?>" width="50px">
+                                                    <?php
+                                                } else { 
+                                                    ?>
+                                                    <img src="../assets/img/default.jpg" width="50px">
+                                                    <?php
+                                                }
+                                            ?>
+                                        </td>
                                         <td><?php echo $medicamento->nome; ?></td>
                                         <td><?php echo $medicamento->formaFarmaceutica; ?></td>
                                         <td><?php echo $medicamento->preco; ?></td>
                                         <td><?php echo $medicamento->quantidade; ?></td>
                                         <td class="text-center">
-                                            <a class='btn btn-primary btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Editar</a> 
-                                            <a href="../deletar_medicamento.php?id=<?php echo $medicamento->id; ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
+                                            <a class='btn btn-primary btn-xs' href="cadastro.php?id=<?php echo $medicamento->id;?>"><span class="glyphicon glyphicon-edit"></span> Editar</a> 
+                                            <a 
+                                                href="#"
+                                                id="<?php echo $medicamento->id; ?>" 
+                                                data-target="#exampleModal"
+                                                value="<?php echo $medicamento->nome; ?>" 
+                                                class="deletar btn btn-danger btn-xs"
+                                                data-toggle="modal">
+                                                    <span class="glyphicon glyphicon-remove"></span> Deletar</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -153,49 +187,65 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div id="add_project" class="modal fade" role="dialog" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
+    
+    <!-- Modal exclusao de elementos -->
+    <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header login-header">
-                    <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">Adicionar Medicamento</h4>
-                </div>
-                <form action="../cadastrar_medicamento.php" method="post">
-                    <div class="modal-body">
-                        <input type="text" placeholder="Nome do medicamento" name="nome" required>
-                        <input type="text" placeholder="Princípio Ativo" name="principio_ativo">
-                        <input type="text" placeholder="Concentração" name="concentracao">
-                        <input type="text" placeholder="Forma Farmaceutica" name="forma_farmaceutica">
-                        <input type="number" placeholder="Registro Anvisa" name="registro_anvisa">
-                        <input type="text" placeholder="Detentor Registro" name="detentor_registro">
-                        <input type="number" placeholder="Preço" name="preco">
-                        <input type="number" placeholder="Quantidade" name="quantidade">
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="cancel" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="add-project">Salvar</button>
-                    </div>
-                </form>
+            <div class="modal-header">
+                <h4 class="modal-title">Esta ação requer confirmação</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-
+            <div class="modal-body">
+                <p>Deseja realmente excluir o item <span id="nome-medicamento"></span></p>
+            </div>
+            <div class="modal-footer">
+                <a id="confirmar-exclusao" href="#" class="btn btn-primary">Confirmar</a>
+                <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+            </div>
+            </div>
         </div>
     </div>
 
     <script>
+
+        // Fechando menssagem de medicamento cadastrado com sucesso
         document.getElementById('close-success').addEventListener('click', function(){
-            document.querySelector('.container .alert-success').setAttribute('style', 'display:none');
             window.location = document.URL.replace('?i=s1', '');
         });
 
+        // Fechando menssagem de erro ao cadatrar medicamento
         document.getElementById('close-error').addEventListener('click', function(){
-            document.querySelector('.container .alert-danger').setAttribute('style', 'display:none');
             window.location = document.URL.replace('?i=e1', '');
         });
+
+        // Fechando menssagem de medicamento excluido com sucesso
+        document.getElementById('close-success2').addEventListener('click', function(){
+            window.location = document.URL.replace('?i=s2', '');
+        });
+
+        // Fechando menssagem de falha ao excluir medicamento
+        document.getElementById('close-error2').addEventListener('click', function(){
+            window.location = document.URL.replace('?i=e2', '');
+        });
+
+        const buttons = document.querySelectorAll('td .deletar');
+        const nomeMedicamento = document.getElementById('nome-medicamento');
+        const confirmar = document.getElementById('confirmar-exclusao');
+
+        for(let i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener('click', function(e){
+                
+                let nome = buttons[i].getAttribute('value');
+                let id =  buttons[i].getAttribute('id');
+
+                nomeMedicamento.innerHTML = '"'+nome+'"';
+
+                confirmar.setAttribute('href', `../excluir_medicamento.php?id=${id}`);
+            });
+        }
     </script>
 </body>
 </html>
