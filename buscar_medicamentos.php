@@ -1,11 +1,11 @@
 <?php
-    // Buscar medicamento pelo nome
-    if(isset($_GET['busca']) && !empty($_GET['busca'])) {
-        
-    }
-    else {
+    if(!isset($_SESSION['session_farma'])) {
+        header('Location: pages/login.php');
+        exit;
+    } 
 
-        
+    $medicamentos = array();
 
-    }
+    $ch = curl_init('http://localhost:8080/produto');
+
 ?>

@@ -10,7 +10,7 @@
 	* e retorna uma variavel 'i' via GET para informar que houve uma falha no login
 	*/
 	if (empty($usuario) || empty($senha)){		
-		header('Location: login.php?i=1');
+		header('Location: pages/login.php?i=1');
 		exit;
 	}
 
@@ -58,11 +58,11 @@
 			setcookie('cookie_farma', $usuario.' '.$senha.' '.$lembrete, time() + (60 * 60 * 24 * 7));
 		}
 
-		header('Location: index.php');
+		header('Location: pages/index.php');
 		exit;
 	}
 	else {
-		header('Location: login.php?i=1');
+		header('Location: pages/login.php?i=1');
 		exit;
 	}
 ?>

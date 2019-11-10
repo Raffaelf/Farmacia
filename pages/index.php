@@ -5,6 +5,22 @@
         header('Location: login.php');
         exit;
     }  
+
+    // Recuperando dados do usuário logado
+    $ch = curl_init('http://localhost:8080/administrador/administrador');
+    
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+        'Content-Type: application/json',
+        "Authorization:Bearer " . $_SESSION['session_farma']                                                                                
+    ));                                                             
+                                                                                                                    
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    // Convertendo json para objeto
+    $farmacia_logada = json_decode($response);
 ?>
 <!DOCTYPE html>
 <html>
@@ -59,9 +75,9 @@
                             </nav>
 
                             <!-- Campo de busca -->
-                            <div class="search hidden-xs hidden-sm">
+                            <div class="search hidden-sm">
                                 <form method="get">
-                                    <button type="submit"><img src="assets/img/search.png" alt=""></button>
+                                    <button type="submit"><img src="../assets/img/search.png" alt=""></button>
                                     <input type="text" placeholder="Buscar Medicamento" name="busca" id="search">
                                 </form>
                             </div>
@@ -71,15 +87,13 @@
                                 <ul class="list-inline header-top pull-right">
                                     <li class="hidden-xs"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">Adicionar Medicamento</a></li>
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="assets/img/user-icon.png" alt="user">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="../assets/img/user-icon.png" alt="user">
                                             <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span>JS Krishna</span>
-                                                    <p class="text-muted small">
-                                                        me@jskrishna.com
-                                                    </p>
+                                                    <span><?php echo $farmacia_logada->nome;?></span>
+                                                    <a href="#" style="color:#333">Editar perfil</a>
                                                     <div class="divider">
                                                     </div>
                                                     <a href="../sair.php" class="btn btn-sm btn-block btn-primary active">Sair</a>
