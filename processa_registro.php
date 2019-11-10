@@ -4,6 +4,7 @@ if($_POST['password'] != $_POST['confirm-password']) {
     echo "<script>alert('Senhas não coincidem!');</script>";
     echo "<script>window.location = '/Admin/login.php'</script>";
 } else {
+
     $data = array(
         "cnpj" => $_POST['cnpj'], 
         "email" => $_POST['email'],
@@ -25,7 +26,9 @@ if($_POST['password'] != $_POST['confirm-password']) {
     $ch = curl_init('http://localhost:8080/administrador/cadastrarfarmacia');                                                                      
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);   
+    curl_setopt($ch, CURLOPT_VERBOSE, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 1);                                                                   
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
         'Content-Type: application/json',                                                                                
         'Content-Length: ' . strlen($data_string))                                                                       
@@ -37,14 +40,14 @@ if($_POST['password'] != $_POST['confirm-password']) {
     $header = substr($response, 0, $headerSize);
     curl_close($ch);
 
-	$header = explode(' ', $header);
+    $header = explode(' ', $header);
 
     if($header[1] == "200" || $header[1] == "201") {
 
-        header('Location: index.php?i=2');
+        header('Location: login.php?i=2');
         exit;
     }
-    header('Location: index.php');
+    header('Location: login.php');
     exit;
 }
 ?>

@@ -47,8 +47,11 @@
 
 		if($header[1] == "200") {
 				
-				$token = $header[4];
-				$_SESSION['session_farma'] = $token;
+				$token = explode(' ', $header[4]);
+				$token = str_replace('Content-Length:', "", $token[0]);
+
+				$_SESSION['session_farma'] = trim($token);
+
 
 				// Caso a caixa lembrar senha esteja marcada cria um cookie com validade de 7 dias
 				if($lembrete) {

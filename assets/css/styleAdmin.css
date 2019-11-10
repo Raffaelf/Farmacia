@@ -181,6 +181,18 @@ li,ul{
 
 /*Login Signup Page*/
 
+.container p.alert {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container p.alert button {
+    border: none;
+    background: none;
+    font-weight: bold;
+}
+
 
 /*Home Page*/
 

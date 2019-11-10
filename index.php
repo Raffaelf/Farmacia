@@ -4,9 +4,7 @@
     if(!isset($_SESSION['session_farma'])) {
         header('Location: login.php');
         exit;
-    }
-
-    
+    }  
 ?>
 <!DOCTYPE html>
 <html>
@@ -94,45 +92,47 @@
                         </div>
                     </header>
                 </div>
-                <div class="row" style="padding-top: 80px;">
+                <div class="row" style="padding-top: 10px;">
                     <div class="container">
+                        <p class="alert alert-success" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's1' ? '' : 'style="display:none"'); ?>>
+                            Medicamento cadastrado com sucesso!
+                            <button id="close-success">X</button>
+                        </p>
+                        <p  class="alert alert-danger" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e1' ? '' : 'style="display:none"'); ?>>
+                            Sinto muito, mas não foi possível cadastra o medicamento :(
+                            <button id="close-error">X</button>
+                        </p>
                         <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0">
-                            <table class="table table-striped custab">
+                            <table class="table table-striped table-responsible custab">
                                 <thead>
-                                    <a href="#" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new categories</a>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Title</th>
-                                        <th>Parent ID</th>
+                                        <th>Nome</th>
+                                        <th>Forma Farmaceutica</th>
+                                        <th>Preço</th>
+                                        <th>Quantidade</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
-                                <tr>
-                                    <td>1</td>
-                                    <td>News</td>
-                                    <td>News Cate</td>
-                                    <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Products</td>
-                                    <td>Main Products</td>
-                                    <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Blogs</td>
-                                    <td>Parent Blogs</td>
-                                    <td class="text-center"><a class='btn btn-info btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a> <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Del</a></td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>News</td>
+                                        <td>News Cate</td>
+                                        <td>News Cate</td>
+                                        <td>News Cate</td>
+                                        <td class="text-center">
+                                            <a class='btn btn-primary btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Editar</a> 
+                                            <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 
     <!-- Modal -->
@@ -145,25 +145,38 @@
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h4 class="modal-title">Adicionar Medicamento</h4>
                 </div>
-                <div class="modal-body">
-                    <input type="text" placeholder="Nome do medicamento" name="name">
-                    <input type="number" placeholder="Preço" name="number">
-                    <input type="number" placeholder="Quantidade" name="quantidade">
-                    <input type="text" placeholder="Concentração" name="concentracao">
-                    <input type="text" placeholder="Detentor Registro" name="detentorregistro">
-                    <input type="text" placeholder="Forma Farmaceutica" name="formafarmaceutica">
-                    <input type="text" placeholder="Princípio Ativo" name="principioativo">
-                    <input type="number" placeholder="Registro Anvisa" name="registroanvisa">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="cancel" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="add-project" data-dismiss="modal">Salvar</button>
-                </div>
+                <form action="processa_medicamento.php" method="post">
+                    <div class="modal-body">
+                        <input type="text" placeholder="Nome do medicamento" name="nome" required>
+                        <input type="text" placeholder="Princípio Ativo" name="principio_ativo">
+                        <input type="text" placeholder="Concentração" name="concentracao">
+                        <input type="text" placeholder="Forma Farmaceutica" name="forma_farmaceutica">
+                        <input type="number" placeholder="Registro Anvisa" name="registro_anvisa">
+                        <input type="text" placeholder="Detentor Registro" name="detentor_registro">
+                        <input type="number" placeholder="Preço" name="preco">
+                        <input type="number" placeholder="Quantidade" name="quantidade">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="cancel" data-dismiss="modal">Fechar</button>
+                        <button type="submit" class="add-project">Salvar</button>
+                    </div>
+                </form>
             </div>
 
         </div>
     </div>
 
-</body>
+    <script>
+        document.getElementById('close-success').addEventListener('click', function(){
+            document.querySelector('.container .alert-success').setAttribute('style', 'display:none');
+            window.location = document.URL.replace('?i=s1', '');
+        });
 
+        document.getElementById('close-error').addEventListener('click', function(){
+            document.querySelector('.container .alert-danger').setAttribute('style', 'display:none');
+            window.location = document.URL.replace('?i=e1', '');
+        });
+    </script>
+</body>
 </html>
