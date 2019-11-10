@@ -21,6 +21,9 @@
 
     // Convertendo json para objeto
     $farmacia_logada = json_decode($response);
+    
+    // Buscar todos os medicamentos para listagem
+    require_once '../buscar_medicamentos.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -129,17 +132,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php foreach($medicamentos as $medicamento): ?>
                                     <tr>
-                                        <td>1</td>
-                                        <td>News</td>
-                                        <td>News Cate</td>
-                                        <td>News Cate</td>
-                                        <td>News Cate</td>
+                                        <td><?php echo $medicamento->id; ?></td>
+                                        <td><?php echo $medicamento->nome; ?></td>
+                                        <td><?php echo $medicamento->formaFarmaceutica; ?></td>
+                                        <td><?php echo $medicamento->preco; ?></td>
+                                        <td><?php echo $medicamento->quantidade; ?></td>
                                         <td class="text-center">
                                             <a class='btn btn-primary btn-xs' href="#"><span class="glyphicon glyphicon-edit"></span> Editar</a> 
-                                            <a href="#" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
+                                            <a href="../deletar_medicamento.php?id=<?php echo $medicamento->id; ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
                                         </td>
                                     </tr>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -159,7 +164,7 @@
                     <button type="button" class="close" data-dismiss="modal">×</button>
                     <h4 class="modal-title">Adicionar Medicamento</h4>
                 </div>
-                <form action="processa_medicamento.php" method="post">
+                <form action="../cadastrar_medicamento.php" method="post">
                     <div class="modal-body">
                         <input type="text" placeholder="Nome do medicamento" name="nome" required>
                         <input type="text" placeholder="Princípio Ativo" name="principio_ativo">

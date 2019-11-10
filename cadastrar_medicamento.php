@@ -2,7 +2,7 @@
     session_start();
    
     if(!isset($_SESSION['session_farma'])) {
-        header('Location: login.php');
+        header('Location: pages/login.php');
         exit;
     }
 
@@ -17,7 +17,7 @@
         !isset($_POST['detentor_registro'])
     ) {
 
-        header('Location: index.php?i=4');
+        header('Location: pages/index.php?i=4');
         exit;
     }
     
@@ -54,9 +54,9 @@
 
     if($header[1] == "200" || $header[1] == "201") {
 
-        header('Location: index.php?i=s1');
+        header('Location: pages/index.php?i=s1');
         exit;
     }
-    header('Location: index.php?i=e1');
+    header('Location: pages/index.php?i=e1');
     exit;
 ?>
