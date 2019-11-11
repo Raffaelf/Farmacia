@@ -6,6 +6,22 @@
         exit;
     }
 
+    // Recuperando dados do usuário logado
+    $ch = curl_init('http://localhost:8080/administrador/administrador');
+    
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+        'Content-Type: application/json',
+        "Authorization:Bearer " . $_SESSION['session_farma']                                                                                
+    ));                                                             
+                                                                                                                    
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    // Convertendo json para objeto
+    $farmacia_logada = json_decode($response);
+
     if(
         !isset($_POST['nome']) &&
         !isset($_POST['preco']) &&
@@ -33,9 +49,10 @@
         "quantidade" => $_POST['quantidade']
     );
 
-    // Montando a requisição
-    $dadosJSON = json_encode($dados);  
-                                                                                                                    
+    // Convertendo o array em json
+    $dadosJSON = json_encode($dados); 
+     
+    // Montando a requisição                                                                                                                
     $ch = curl_init('http://localhost:8080/adminAut/produto');                                                                      
     
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -46,14 +63,51 @@
         "Authorization:Bearer " . $_SESSION['session_farma']
     ));                                                                                                              
     curl_setopt($ch, CURLOPT_HEADER, 1);                                                                                                              
-                                                                                                                    
+    
+    // Executa a requisição e armazena a resposta
     $response = curl_exec($ch);
     curl_close($ch);
 
     $header = explode(' ', $response);
 
     if($header[1] == "200" || $header[1] == "201") {
+        echo "OK<br>";
 
+         // Recuperando as informações da imagem, como o nome e caminho
+         $filename = $_FILES['imagem']['name'];
+         $filedata = $_FILES['imagem']['tmp_name'];
+
+        // Cadastrando imagen no medicamento se houver
+        if(!empty($filedata)) {
+            echo "OK-img<br>";
+            /*
+             * A api não retorna o id do medicamento que acabou de ser cadastrado
+             * portanto deve se fazer uma busca por todos os medicamentos e pegar
+             * o ultimo que a farmacia logada adiciono.
+             * 
+             * extrair o id do medicamento e passar pra o cadastro da imagem
+             */
+            require_once 'buscar_medicamentos.php';
+
+            // O require anterio já faz essa busca e devolve uma lista de medicamentos ordenada
+            $id = $medicamentos[0]->id;
+            echo $id."<br>";
+
+            $file = ['file' => new \CURLFile($filedata, 'image/jpg', $filename)];
+
+            $ch = curl_init("http://localhost:8080/imagem/admin/addimgprod/{$id}");
+    
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $file);                                                                  
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data"));                                                                                                              
+            curl_setopt($ch, CURLOPT_HEADER, 1); 
+            
+            $response = curl_exec($ch);
+            curl_close($ch);   
+
+            var_dump($response);
+        }
         header('Location: pages/index.php?i=s1');
         exit;
     }

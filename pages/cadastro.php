@@ -132,7 +132,8 @@
                     <form 
                     class="col-md-8 col-md-offset-2" 
                     action="<?php echo ($medicamento_selecionado ? '../alterar_medicamento.php': '../cadastrar_medicamento.php');?>" 
-                    method="post">
+                    method="post"
+                    enctype="multipart/form-data">
                         <div class="form-group">
                             <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->nome : '');?>" class="form-control" type="text" placeholder="Nome do medicamento" name="nome" required>
                         </div>
