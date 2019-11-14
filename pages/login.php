@@ -24,7 +24,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Logar no sistama</title>
+	<title>Logar no Sistema</title>
 
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link href="../assets/css/styleLogin.css" rel="stylesheet">
@@ -76,24 +76,24 @@
 									<div class="form-group">
 										<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Senha" value="<?=$senha?>" required>
 									</div>
-									<div class="form-group text-center">
-										<input type="checkbox" tabindex="3" class="" name="remember" id="remember" value="SIM" 
-										<?php echo ($lembrar == 'SIM' ? 'checked' : '');?>>
-										<label for="remember"> Lembrar senha</label>
-									</div>
 									<div class="form-group">
 										<div class="row">
-											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-info" value="Entrar">
+											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-center">
+												<input type="checkbox" tabindex="3" class="" name="remember" id="remember" value="SIM" 
+												<?php echo ($lembrar == 'SIM' ? 'checked' : '');?>>
+												<label for="remember"> Lembrar senha</label>
+											</div>
+											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+												<div class="text-center">
+													<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Esqueceu a senha?</a>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="row">
-											<div class="col-lg-12">
-												<div class="text-center">
-													<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Esqueceu a senha?</a>
-												</div>
+											<div class="col-sm-12">
+												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary btn-block" value="Entrar">
 											</div>
 										</div>
 									</div>
@@ -150,8 +150,8 @@
 									</div> -->
 									<div class="form-group">
 										<div class="row">
-											<div class="col-sm-6 col-sm-offset-3">
-												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Cadastrar">
+											<div class="col-sm-12">
+												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-success btn-block" value="Cadastrar">
 											</div>
 										</div>
 									</div>

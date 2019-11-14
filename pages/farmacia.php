@@ -22,28 +22,6 @@
     // Convertendo json para objeto
     $farmacia_logada = json_decode($response);
     
-    $medicamento_selecionado = null;
-    if(isset($_GET['id'])) {
-
-        $id = $_GET['id'];
-
-        $ch = curl_init("http://localhost:8080/produto/{$id}");
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-            'Content-Type: application/json',
-            "Authorization:Bearer " . $_SESSION['session_farma']                                                                               
-        ));                                                             
-                                                                                                                        
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        $response = json_decode($response);
-        
-        if($response->farmacia->id == $farmacia_logada->id){
-            $medicamento_selecionado = $response;
-        }
-    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -72,16 +50,16 @@
                 </div>
                 <div class="navi">
                     <ul>
-                        <li class="active">
-                            <a href="#">
-                                <i><img src="../assets/img/add.png" alt="" srcset=""></i>
-                                <span class="hidden-xs hidden-sm"><?php echo($medicamento_selecionado ? 'Alterar' : 'Adicionar');?></span>
-                            </a>
-                        </li>
                         <li>
                             <a href="index.php">
                                 <i><img src="../assets/img/list.png" alt="" srcset=""></i>
                                 <span class="hidden-xs hidden-sm">Medicamentos</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i><img src="../assets/img/add.png" alt="" srcset=""></i>
+                                <span class="hidden-xs hidden-sm">Adicionar</span>
                             </a>
                         </li>
                     </ul>
@@ -103,7 +81,7 @@
                                 </div>
                             </nav>
                             <!-- Titulo da pagina -->
-                            <h3><?php echo ($medicamento_selecionado ? 'Alterar Medicamento' : 'Novo Medicamento');?></h3>
+                            <h3>Minha Conta</h3>
                         </div>
                         <div class="col-md-5">
                             <div class="header-rightside">
@@ -115,7 +93,7 @@
                                             <li>
                                                 <div class="navbar-content">
                                                     <span><?php echo $farmacia_logada->nome;?></span>
-                                                    <a href="farmacia.php" style="color:#333">Minha Conta</a>
+                                                    <a href="#" style="color:#333">Minha Conta</a>
                                                     <div class="divider">
                                                     </div>
                                                     <a href="../sair.php" class="btn btn-sm btn-block btn-primary active">Sair</a>
@@ -128,60 +106,76 @@
                         </div>
                     </header>
                 </div>
-                <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0; padding-top: 100px">
-                    <form 
-                    class="col-md-8 col-md-offset-2" 
-                    action="<?php echo ($medicamento_selecionado ?  '../atualizar_medicamento.php' : '../cadastrar_medicamento.php');?>" 
-                    method="post"
-                    enctype="multipart/form-data">
-                        <input type="text" name="id" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->id : '');?>" hidden>
+
+                <!-- Conteudo da página -->
+                <div class="row" 
+                style="
+                    padding: 20px 100px;
+                ">
+                    <h4>Informações sobre a farmacia</h4>
+                    <hr/>
+                    <form action="../cadastrar_farmacia.php" method="post" role="form" style="
+                        width: 100%;
+                    ">
+
+                        <label>Dados da farmácia </label>
                         <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->nome : '');?>" class="form-control" type="text" placeholder="Nome do medicamento" name="nome" required>
+                            <input type="text" name="nome" id="nome" tabindex="1" class="form-control" placeholder="Nome" value="<?php echo $farmacia_logada->nome ;?>">
                         </div>
                         <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->principioAtivo : '');?>" class="form-control" type="text" placeholder="Princípio Ativo" name="principio_ativo">
+                            <input type="text" name="cnpj" id="cnpj" class="form-control" placeholder="CNPJ" onkeyup="mascara('##.###.###/####-##',this,event,true)" maxlength="18" value="<?php echo $farmacia_logada->cnpj ;?>">
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->registroAnvisa : '');?>" class="form-control" type="number" placeholder="Registro Anvisa" name="registro_anvisa">
-                            </div>
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->detentorRegistro : '');?>" class="form-control" type="text" placeholder="Detentor Registro" name="detentor_registro">
-                            </div>
-                        </div><br>
                         <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->concentracao : '');?>" class="form-control" type="text" placeholder="Concentração" name="concentracao">
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->preco : '');?>" class="form-control" type="number" placeholder="Preço" name="preco">
-                            </div>
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->quantidade : '');?>" class="form-control" type="number" placeholder="Quantidade" name="quantidade">
-                            </div>
-                        </div><br>
-                        <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->formaFarmaceutica : '');?>" class="form-control" type="text" placeholder="Forma Farmaceutica" name="forma_farmaceutica">
-                        </div>
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Imagem</span>
-                            </div>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="inputGroupFile01" name="imagem">
-                            </div>
+                            <input type="text" name="telefone" id="telefone" tabindex="1" class="form-control" placeholder="Telefone" value="<?php echo $farmacia_logada->telefone ;?>" required onkeyup="mascara('(##) ####-####',this,event,true)" maxlength="14">
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="submit" value="Salvar" class="btn btn-primary btn-block">
-                            </div>
-                            <div class="col-md-6">
-                                <input type="reset" value="Limpar" class="btn btn-default btn-block">
+
+                        <label>Endereço da farmácia</label>
+                        <div class="form-group">
+                            <input type="text" name="rua" id="rua" tabindex="1" class="form-control" placeholder="Rua" value="<?php echo $farmacia_logada->endereco->rua ;?>" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="numero" id="numero" tabindex="1" class="form-control" placeholder="Nº" value="<?php echo $farmacia_logada->endereco->numero ;?>" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="bairro" id="bairro" tabindex="1" class="form-control" placeholder="Bairro" value="<?php echo $farmacia_logada->endereco->setor ;?>" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="latitude" id="latitude" tabindex="1" class="form-control" placeholder="Latitude" value="<?php echo $farmacia_logada->endereco->latitude ;?>" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="longitude" id="longitude" tabindex="1" class="form-control" placeholder="Longitude" value="<?php echo $farmacia_logada->endereco->longitude ;?>" required>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-primary" value="Salvar Alterações" style="display:none">
+                                </div>
                             </div>
                         </div>
-                      
                     </form>
+
+                    <h4>Configurações Adicionais</h4>
+                    <hr/>
+                    <h5 style="font-weight:bold">Editar Conta</h5>
+                    <p>Para habilitar a edição dos dados da farmacia, sigua o passo a baixo.</p>
+                    <p class="alert alert-info" role="alert" style="display:flex;justify-content:space-between">
+                        Para habilitar a alteração click em "Alterar"
+                        <button style="background:#FFF;
+                        border:0; border-radius:4px;">Alterar</button>
+                    </p>
+                    <hr/>
+                    <h5 style="font-weight:bold">Encerrar Conta</h5>
+                    <p>
+                        Atenção, ao realizar este passo você perdera acesso imediato a sua conta bem como a todos os produtos já cadastrados.
+                         Se mesmo assim deseja proceguir sigua o passo abaixo.
+                    </p>
+                    <p class="alert alert-danger" role="alert" style="display:flex;justify-content:space-between">
+                        Para excluir sua conta click em "Delete"
+                        <button style="background:#FFF;
+                        border:0; border-radius:4px;">Delete</button>
+                    </p>
                 </div>
             </div>
         </div>
@@ -208,9 +202,6 @@
         </div>
     </div>
     </div>
-
-   
-
    
 </body>
 </html>

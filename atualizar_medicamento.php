@@ -39,6 +39,7 @@
     
     // Montando array com dados
     $dados = array(
+        "id" => $_POST['id'],
         "nome" => $_POST['nome'],
         "principioAtivo" => $_POST['principio_ativo'],
         "concentracao" => $_POST['concentracao'],
@@ -48,7 +49,7 @@
         "preco" => $_POST['preco'],
         "quantidade" => $_POST['quantidade']
     );
-  
+
     // Convertendo o array em json
     $dadosJSON = json_encode($dados); 
      
@@ -56,7 +57,7 @@
     $ch = curl_init('http://localhost:8080/adminAut/produto');                                                                      
     
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT"); 
     curl_setopt($ch, CURLOPT_POSTFIELDS, $dadosJSON);                                                                  
     curl_setopt($ch, CURLOPT_HTTPHEADER, array(
         "Content-Type: application/json", 
@@ -77,35 +78,27 @@
          $filedata = $_FILES['imagem']['tmp_name'];
 
         // Cadastrando imagen no medicamento se houver
-        if(!empty($filedata)) {
-            /*
-             * A api não retorna o id do medicamento que acabou de ser cadastrado
-             * portanto deve se fazer uma busca por todos os medicamentos e pegar
-             * o ultimo que a farmacia logada adiciono.
-             * 
-             * extrair o id do medicamento e passar pra o cadastro da imagem
-             */
-            require_once 'buscar_medicamentos.php';
+        // if(!empty($filedata)) {
 
-            // O require anterio já faz essa busca e devolve uma lista de medicamentos ordenada
-            $id = $medicamentos_ativos[0]->id;
+        //     // Recuperando o id
+        //     $id = $_POST['id'];
 
-            $file = ['file' => new \CURLFile($filedata, 'image/jpg', $filename)];
+        //     $file = ['file' => new \CURLFile($filedata, 'image/jpg', $filename)];
 
-            $ch = curl_init("http://localhost:8080/imagem/admin/addimgprod/{$id}");
+        //     $ch = curl_init("http://localhost:8080/imagem/admin/addimgprod/{$id}");
     
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $file);                                                                  
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data"));                                                                                                              
-            curl_setopt($ch, CURLOPT_HEADER, 1); 
+        //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        //     curl_setopt($ch, CURLOPT_POST, 1);
+        //     curl_setopt($ch, CURLOPT_POSTFIELDS, $file);                                                                  
+        //     curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data"));                                                                                                              
+        //     curl_setopt($ch, CURLOPT_HEADER, 1); 
             
-            $response = curl_exec($ch);
-            curl_close($ch);   
-        }
-        header('Location: pages/index.php?i=s1');
+        //     $response = curl_exec($ch);
+        //     curl_close($ch);   
+        // }
+        header('Location: pages/index.php?i=s3');
         exit;
     }
-    header('Location: pages/index.php?i=e1');
+    header('Location: pages/index.php?i=e3');
     exit;
 ?>

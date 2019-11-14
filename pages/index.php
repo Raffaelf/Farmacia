@@ -43,7 +43,8 @@
 <body class="home">
     <div class="container-fluid display-table">
         <div class="row display-table-row">
-            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+            <div class="col-md-4 col-lg-4 col-sm-1 hidden-xs display-table-cell v-align box" 
+            id="navigation">
                 <div class="logo">
                     <a hef="admin.html">
                         <img src="https://consultaremedios.com.br/assets/logos/logo_default-17ab6834258c29870f364a777d12cca917f79ff88aceb6b9c4f3b89ac8c0a53f.svg" alt="merkery_logo" class="hidden-xs hidden-sm">
@@ -54,20 +55,20 @@
                     <ul>
                         <li class="active">
                             <a href="#">
-                                <i class="fas fa-angle-right"></i>
+                                <i><img src="../assets/img/list.png" alt="" srcset=""></i>
                                 <span class="hidden-xs hidden-sm">Medicamentos</span>
                             </a>
                         </li>
                         <li>
                             <a href="cadastro.php">
-                                <i class="fas fa-angle-right"></i>
-                                <span class="hidden-xs hidden-sm">Novo Medicamento</span>
+                                <i><img src="../assets/img/add.png" alt="" srcset=""></i>
+                                <span class="hidden-xs hidden-sm">Adicionar</span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+            <div class="col-md-8 col-lg-8 col-sm-11 display-table-cell v-align">
                 <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
                 <div class="row">
                     <header>
@@ -102,7 +103,7 @@
                                             <li>
                                                 <div class="navbar-content">
                                                     <span><?php echo $farmacia_logada->nome;?></span>
-                                                    <a href="#" style="color:#333">Editar perfil</a>
+                                                    <a href="farmacia.php" style="color:#333">Minha Conta</a>
                                                     <div class="divider">
                                                     </div>
                                                     <a href="../sair.php" class="btn btn-sm btn-block btn-primary active">Sair</a>
@@ -119,22 +120,46 @@
                     <div class="container">
                         <p class="alert alert-success" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's1' ? '' : 'style="display:none"'); ?>>
                             Medicamento cadastrado com sucesso!
-                            <button id="close-success">X</button>
+                            <button data="s1">X</button>
                         </p>
                         <p class="alert alert-info" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's2' ? '' : 'style="display:none"'); ?>>
                             Medicamento excluido com sucesso!
-                            <button id="close-success2">X</button>
+                            <button data="s2">X</button>
+                        </p>
+                        <p class="alert alert-info" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's3' ? '' : 'style="display:none"'); ?>>
+                            Medicamento atualizado com sucesso!
+                            <button data="s3">X</button>
+                        </p>
+                        <p class="alert alert-info" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's4' ? '' : 'style="display:none"'); ?>>
+                            O medicamento foi habilitado com sucesso!
+                            <button data="s4">X</button>
                         </p>
                         <p  class="alert alert-danger" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e1' ? '' : 'style="display:none"'); ?>>
                             Sinto muito, mas não foi possível cadastra o medicamento :(
-                            <button id="close-error">X</button>
+                            <button data="e1">X</button>
                         </p>
                         <p  class="alert alert-danger 2" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e2' ? '' : 'style="display:none"'); ?>>
                             Sinto muito, mas não foi possível excluir o medicamento :(
-                            <button id="close-error2">X</button>
+                            <button data="e2">X</button>
                         </p>
-                        <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0">
-                            <table class="table table-striped table-responsible custab">
+                        <p  class="alert alert-danger 2" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e3' ? '' : 'style="display:none"'); ?>>
+                            Ops!, não foi possível atualizar os dados do medicamento.
+                            <button data="e3">X</button>
+                        </p>
+                        <p  class="alert alert-danger 2" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e4' ? '' : 'style="display:none"'); ?>>
+                            Sinto muito, mas não foi possível habilitar o medicamento.
+                            <button data="e4">X</button>
+                        </p>
+                        
+                        <div class="row col-md-12 custyle" style="margin: 0">
+                            <ul class="nav nav-tabs">
+                                <li id="frameAtivos" role="presentation" class="active"><a href="">Ativos</a></li>
+                                <li id="frameDesativos" role="presentation" class=""><a href="">Desativados</a></li>
+                            </ul>
+                            <br>
+
+                            <!-- Tabela de itens ativos -->
+                            <table id="tableAtivos" class="table table-striped table-responsible custab">
                                 <thead>
                                     <tr>
                                         <th>Foto</th>
@@ -146,7 +171,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($medicamentos as $medicamento): ?>
+                                    <?php foreach($medicamentos_ativos as $medicamento): ?>
                                     <tr>
                                         <td>
                                             <?php 
@@ -176,6 +201,50 @@
                                                 class="deletar btn btn-danger btn-xs"
                                                 data-toggle="modal">
                                                     <span class="glyphicon glyphicon-remove"></span> Deletar</a>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+
+                            <!-- Tabela de itens desativados -->
+                            <table id="tableDesativos" class="table table-striped table-responsible custab" style="display:none">
+                                <thead>
+                                    <tr>
+                                        <th>Foto</th>
+                                        <th>Nome</th>
+                                        <th>Forma Farmaceutica</th>
+                                        <th>Preço</th>
+                                        <th>Quantidade</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($medicamentos_desativados as $medicamento): ?>
+                                    <tr>
+                                        <td>
+                                            <?php 
+                                                if(isset($medicamento->imagens[0]->id)) {
+                                                    $id = $medicamento->imagens[0]->id;
+                                                    ?>
+                                                    <img src="http://localhost:8080/imagem/<?php echo $id;?>" width="50px">
+                                                    <?php
+                                                } else { 
+                                                    ?>
+                                                    <img src="../assets/img/default.jpg" width="50px">
+                                                    <?php
+                                                }
+                                            ?>
+                                        </td>
+                                        <td><?php echo $medicamento->nome; ?></td>
+                                        <td><?php echo $medicamento->formaFarmaceutica; ?></td>
+                                        <td><?php echo $medicamento->preco; ?></td>
+                                        <td><?php echo $medicamento->quantidade; ?></td>
+                                        <td class="text-center">
+                                            <a class='btn btn-success btn-md' href="../ativar_medicamento.php?id=<?php echo $medicamento->id;?>">
+                                                <span class="glyphicon glyphicon-edit"></span> 
+                                                Ativar
+                                            </a> 
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -211,26 +280,19 @@
 
     <script>
 
-        // Fechando menssagem de medicamento cadastrado com sucesso
-        document.getElementById('close-success').addEventListener('click', function(){
-            window.location = document.URL.replace('?i=s1', '');
-        });
+        // Controle dos aletar de ações
+        const closeAlerts = document.querySelectorAll('.container .alert button');
 
-        // Fechando menssagem de erro ao cadatrar medicamento
-        document.getElementById('close-error').addEventListener('click', function(){
-            window.location = document.URL.replace('?i=e1', '');
-        });
+        for (let i = 0; i < closeAlerts.length; i++) {
+            closeAlerts[i].addEventListener('click', function(){
+                
+                let elemento = this.getAttribute('data');
 
-        // Fechando menssagem de medicamento excluido com sucesso
-        document.getElementById('close-success2').addEventListener('click', function(){
-            window.location = document.URL.replace('?i=s2', '');
-        });
+                window.location = document.URL.replace(`?i=${elemento}`, '');
+            });
+        }
 
-        // Fechando menssagem de falha ao excluir medicamento
-        document.getElementById('close-error2').addEventListener('click', function(){
-            window.location = document.URL.replace('?i=e2', '');
-        });
-
+        // Parte de exclusão de medicamentos
         const buttons = document.querySelectorAll('td .deletar');
         const nomeMedicamento = document.getElementById('nome-medicamento');
         const confirmar = document.getElementById('confirmar-exclusao');
@@ -246,6 +308,41 @@
                 confirmar.setAttribute('href', `../excluir_medicamento.php?id=${id}`);
             });
         }
+
+        // Controle da tabela de medicamentos (itens ativos e desativados)
+        
+        //recuperando itens do menu 
+        const optionAtivo = document.getElementById('frameAtivos');
+        const optionDesativos = document.getElementById('frameDesativos');
+
+        //recuperando as tabelas
+        const tableAtiva = document.getElementById('tableAtivos');
+        const tableDesativo = document.getElementById('tableDesativos');
+
+        optionAtivo.addEventListener('click', function(e){
+            e.preventDefault();
+
+
+            // Alterando visibilidade das tabelas
+            tableAtiva.removeAttribute('style');
+            tableDesativo.setAttribute('style', 'display:none');
+
+            // Alterando estado dos botões do menu
+            optionAtivo.setAttribute('class', 'active');
+            optionDesativos.removeAttribute('class');
+        });
+
+        optionDesativos.addEventListener('click', function(e){
+            e.preventDefault();
+
+            tableDesativo.removeAttribute('style');
+            tableAtiva.setAttribute('style', 'display:none');
+
+            // Alterando estado dos botões do menu
+            optionDesativos.setAttribute('class', 'active');
+            optionAtivo.removeAttribute('class');
+        });
+
     </script>
 </body>
 </html>

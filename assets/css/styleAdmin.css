@@ -67,6 +67,14 @@ li,ul{
     color: #fff;
 }
 
+.navi ul li a{
+    opacity: .5;
+}
+
+.navi ul li.active a{
+    opacity: 1;
+}
+
 .login-header .nav-tabs {
     border-bottom: none;
 }

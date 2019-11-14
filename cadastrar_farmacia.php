@@ -44,10 +44,10 @@ if($_POST['password'] != $_POST['confirm-password']) {
 
     if($header[1] == "200" || $header[1] == "201") {
 
-        header('Location: login.php?i=2');
+        header('Location: pages/login.php?i=2');
         exit;
     }
-    header('Location: login.php');
+    header('Location: pages/login.php');
     exit;
 }
 ?>
