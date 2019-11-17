@@ -189,16 +189,17 @@ li,ul{
 
 /*Login Signup Page*/
 
-.container p.alert {
+p.alert {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.container p.alert button {
+p.alert button {
     border: none;
     background: none;
     font-weight: bold;
+    outline: none;
 }
 
 

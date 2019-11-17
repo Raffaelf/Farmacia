@@ -112,6 +112,16 @@
                 style="
                     padding: 20px 100px;
                 ">
+                    <!-- Menssagens de resposta as alterações -->
+                    <p class="alert info alert-info" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's1' ? '' : 'style="display:none"'); ?>>
+                        Os dados da farmacia foram atualizados com sucesso!
+                        <button data="s1">X</button>
+                    </p>
+                    <p class="alert info alert-danger" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 'e1' ? '' : 'style="display:none"'); ?>>
+                        Não foi possível alterar os dados da farmacia!
+                        <button data="e1">X</button>
+                    </p>
+
                     <h4>Informações sobre a farmacia</h4>
                     <hr/>
                     <form action="../cadastrar_farmacia.php" method="post" role="form" style="
@@ -120,37 +130,38 @@
 
                         <label>Dados da farmácia </label>
                         <div class="form-group">
-                            <input type="text" name="nome" id="nome" tabindex="1" class="form-control" placeholder="Nome" value="<?php echo $farmacia_logada->nome ;?>">
+                            <input type="text" name="nome" id="nome" tabindex="1" class="form-control" placeholder="Nome" value="<?php echo $farmacia_logada->nome ;?>" disabled>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="cnpj" id="cnpj" class="form-control" placeholder="CNPJ" onkeyup="mascara('##.###.###/####-##',this,event,true)" maxlength="18" value="<?php echo $farmacia_logada->cnpj ;?>">
+                            <input type="text" name="cnpj" id="cnpj" class="form-control" placeholder="CNPJ" onkeyup="mascara('##.###.###/####-##',this,event,true)" maxlength="18" value="<?php echo $farmacia_logada->cnpj ;?>" disabled>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="telefone" id="telefone" tabindex="1" class="form-control" placeholder="Telefone" value="<?php echo $farmacia_logada->telefone ;?>" required onkeyup="mascara('(##) ####-####',this,event,true)" maxlength="14">
+                            <input type="text" name="telefone" id="telefone" tabindex="1" class="form-control" placeholder="Telefone" value="<?php echo $farmacia_logada->telefone ;?>" required onkeyup="mascara('(##) ####-####',this,event,true)" maxlength="14" disabled>
                         </div>
                         <br>
 
                         <label>Endereço da farmácia</label>
                         <div class="form-group">
-                            <input type="text" name="rua" id="rua" tabindex="1" class="form-control" placeholder="Rua" value="<?php echo $farmacia_logada->endereco->rua ;?>" required>
+                            <input type="text" name="rua" id="rua" tabindex="1" class="form-control" placeholder="Rua" value="<?php echo $farmacia_logada->endereco->rua ;?>" required disabled>
                         </div>
                         <div class="form-group">
-                            <input type="number" name="numero" id="numero" tabindex="1" class="form-control" placeholder="Nº" value="<?php echo $farmacia_logada->endereco->numero ;?>" required>
+                            <input type="number" name="numero" id="numero" tabindex="1" class="form-control" placeholder="Nº" value="<?php echo $farmacia_logada->endereco->numero ;?>" required disabled>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="bairro" id="bairro" tabindex="1" class="form-control" placeholder="Bairro" value="<?php echo $farmacia_logada->endereco->setor ;?>" required>
+                            <input type="text" name="bairro" id="bairro" tabindex="1" class="form-control" placeholder="Bairro" value="<?php echo $farmacia_logada->endereco->setor ;?>" required disabled>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="latitude" id="latitude" tabindex="1" class="form-control" placeholder="Latitude" value="<?php echo $farmacia_logada->endereco->latitude ;?>" required>
+                            <input type="text" name="latitude" id="latitude" tabindex="1" class="form-control" placeholder="Latitude" value="<?php echo $farmacia_logada->endereco->latitude ;?>" required disabled>
                         </div>
                         <div class="form-group">
-                            <input type="text" name="longitude" id="longitude" tabindex="1" class="form-control" placeholder="Longitude" value="<?php echo $farmacia_logada->endereco->longitude ;?>" required>
+                            <input type="text" name="longitude" id="longitude" tabindex="1" class="form-control" placeholder="Longitude" value="<?php echo $farmacia_logada->endereco->longitude ;?>" required disabled> 
                         </div>
                         <br>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-sm-2">
-                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-primary" value="Salvar Alterações" style="display:none">
+                                <div class="col-sm-9"></div>
+                                <div class="col-sm-3">
+                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-success btn-block" value="Salvar Alterações" style="display:none" />
                                 </div>
                             </div>
                         </div>
@@ -160,10 +171,9 @@
                     <hr/>
                     <h5 style="font-weight:bold">Editar Conta</h5>
                     <p>Para habilitar a edição dos dados da farmacia, sigua o passo a baixo.</p>
-                    <p class="alert alert-info" role="alert" style="display:flex;justify-content:space-between">
+                    <p class="alert alert-info" role="alert">
                         Para habilitar a alteração click em "Alterar"
-                        <button style="background:#FFF;
-                        border:0; border-radius:4px;">Alterar</button>
+                        <button id="btn-alterar">Alterar</button>
                     </p>
                     <hr/>
                     <h5 style="font-weight:bold">Encerrar Conta</h5>
@@ -171,10 +181,9 @@
                         Atenção, ao realizar este passo você perdera acesso imediato a sua conta bem como a todos os produtos já cadastrados.
                          Se mesmo assim deseja proceguir sigua o passo abaixo.
                     </p>
-                    <p class="alert alert-danger" role="alert" style="display:flex;justify-content:space-between">
+                    <p class="alert alert-danger" role="alert">
                         Para excluir sua conta click em "Delete"
-                        <button style="background:#FFF;
-                        border:0; border-radius:4px;">Delete</button>
+                        <button id="btn-excluir" data-target="#exampleModal" data-toggle="modal">Delete</button>
                     </p>
                 </div>
             </div>
@@ -187,13 +196,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Esta ação requer confirmação</h4>
+            <h4 class="modal-title">ATENÇÃO</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body">
-            <p>Deseja realmente excluir o item <span id="nome-medicamento"></span></p>
+            <p>
+                A ação que está preste a realizar é permanente, ou seja, não existe uma forma para ser
+                desfeita. <b>Deseja realmente excluir está conta de FARMACIA?</b>
+            </p>
         </div>
         <div class="modal-footer">
             <a id="confirmar-exclusao" href="#" class="btn btn-primary">Confirmar</a>
@@ -202,6 +214,41 @@
         </div>
     </div>
     </div>
+
+    <script>
+        // Controle dos aletar de ações
+        const closeAlerts = document.querySelectorAll('.info button');
+
+        for (let i = 0; i < closeAlerts.length; i++) {
+            closeAlerts[i].addEventListener('click', function(){
+                
+                let elemento = this.getAttribute('data');
+
+                window.location = document.URL.replace(`?i=${elemento}`, '');
+            });
+        }
+
+        //Recuperando dados da farmacia
+        const formulario = document.querySelectorAll('form input');
+
+        document.getElementById('btn-alterar').addEventListener('click', function(){
+            
+            // habilitando campos de texto
+            for(let i = 0; i < formulario.length; i++) {
+                formulario[i].removeAttribute('disabled');
+                
+                // mostrando botão salvar
+                if(formulario[i].type == 'submit') {
+                    formulario[i].removeAttribute('style');
+                }
+            }
+        });
+
+        // Confirmação de exclusão de conta
+        document.getElementById('confirmar-exclusao').addEventListener('click', function(){
+            window.location = '../excluir_farmacia.php';
+        });
+    </script>
    
 </body>
 </html>

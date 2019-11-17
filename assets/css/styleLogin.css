@@ -5,10 +5,10 @@ body {
 }
 
 .message {
-	width: 555px;
+	max-width: 360px;
+	width: 100%;
 	margin: auto;
 	margin-bottom: 30px;
-	box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 	font-weight: 600;
 	display: flex;
 	justify-content: space-between;
@@ -22,11 +22,12 @@ body {
 	font-weight: 900;
 }
 
-.panel-login {
+/* .panel-login {
 	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 	box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.2);
-}
+} */
+
 .panel-login>.panel-heading {
 	color: #00415d;
 	background-color: #fff;
@@ -35,16 +36,16 @@ body {
 }
 .panel-login>.panel-heading a{
 	text-decoration: none;
-	color: #666;
-	font-weight: bold;
-	font-size: 15px;
-	-webkit-transition: all 0.1s linear;
-	-moz-transition: all 0.1s linear;
-	transition: all 0.1s linear;
+	color: rgb(170, 170, 170);
+	font-weight: 300;
+	font-size: 20px;
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear;
+	transition: all 0.4s linear;
 }
 .panel-login>.panel-heading a.active{
-	color: #029f5b;
-	font-size: 18px;
+	color: #67d328;
+	font-size: 20px;
 }
 .panel-login>.panel-heading hr{
 	margin-top: 10px;
