@@ -66,7 +66,7 @@
 									display: block;
 								">
 				
-									<p Style="color: red; font-size: 15px; text-align: center">
+									<p Style="color: crimson; font-size: 14px;">
 										<?php echo (isset($_GET['i']) && $_GET['i'] == 1 ? 'Email e/ou senha inválido!' : ''); ?>
 									</p>
 									
@@ -85,7 +85,7 @@
 											</div>
 											<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 												<div class="text-center">
-													<a href="https://phpoll.com/recover" tabindex="5" class="forgot-password">Esqueceu a senha?</a>
+													<a href="esqueceu_senha.php" tabindex="5" class="forgot-password">Esqueceu a senha?</a>
 												</div>
 											</div>
 										</div>
