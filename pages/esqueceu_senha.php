@@ -68,6 +68,7 @@
             </div>
             <input class="btn btn-primary" type="submit" value="Enviar">
         </form>
+        <a href="login.php">Voltar ao login</a>
     </div>
 
     <script>

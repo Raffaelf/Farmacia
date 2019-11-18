@@ -41,9 +41,20 @@ h2 {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 form input {
    width: 100%;
    margin: 5px 0;
+}
+
+.container a {
+    text-decoration: underline;
+    color: black;
+    opacity: .6;
+}
+
+.container a:hover {
+    opacity: 1;
 }

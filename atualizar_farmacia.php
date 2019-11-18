@@ -21,7 +21,7 @@
     }
     
     // Montando array com dados
-    $data = array(
+    $dados = array(
         "cnpj" => $_POST['cnpj'], 
         "endereco" => array(
             "rua" => $_POST['rua'],
@@ -54,6 +54,8 @@
     curl_close($ch);
 
     $header = explode(' ', $response);
+
+    var_dump($header);
 
     if($header[1] == "200" || $header[1] == "201") {
 

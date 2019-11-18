@@ -124,7 +124,7 @@
 
                     <h4>Informações sobre a farmacia</h4>
                     <hr/>
-                    <form action="../cadastrar_farmacia.php" method="post" role="form" style="
+                    <form action="../atualizar_farmacia.php" method="post" role="form" style="
                         width: 100%;
                     ">
 

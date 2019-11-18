@@ -159,7 +159,19 @@
                             <div class="col-sm-6">
                                 <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->quantidade : '');?>" class="form-control" type="number" placeholder="Quantidade" name="quantidade">
                             </div>
-                        </div><br>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <label for="#categoria">Categorias</label>
+                                <select id="categoria" class="form-control" name="categoria" multiple>
+                                    <option value="">Controlado</option>
+                                    <option value="">Analgesico</option>
+                                    <option value="">Antibiotico</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
                         <div class="form-group">
                             <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->formaFarmaceutica : '');?>" class="form-control" type="text" placeholder="Forma Farmaceutica" name="forma_farmaceutica">
                         </div>
