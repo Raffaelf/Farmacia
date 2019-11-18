@@ -179,7 +179,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="#categoria">Categorias</label>
-                                <select id="categoria" class="form-control" name="categoria[]" multiple>
+                                <select id="categoria" class="form-control" name="categoria[]" multiple required>
                                     <option disabled>Selecione...</option>
                                     <?php foreach($categorias as $categoria): ?>
                                 

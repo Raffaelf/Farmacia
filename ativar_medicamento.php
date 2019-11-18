@@ -31,17 +31,19 @@
         "concentracao" => $medicamento_selecionado->concentracao,
         "formaFarmaceutica" => $medicamento_selecionado->formaFarmaceutica,
         "registroAnvisa" => $medicamento_selecionado->registroAnvisa,
+        "farmacia" => $medicamento_selecionado->farmacia,
         "detentorRegistro" => $medicamento_selecionado->detentorRegistro,
+        "categoria" => $medicamento_selecionado->categoria,
         "preco" => $medicamento_selecionado->preco,
         "quantidade" => $medicamento_selecionado->quantidade,
-        "removedAt" => null
+        "imagens" => $medicamento_selecionado->imagens
     );
 
     // Convertendo o array em json
     $dadosJSON = json_encode($dados); 
      
     // Montando a requisição                                                                                                                
-    $ch = curl_init('http://localhost:8080/adminAut/produto');
+    $ch = curl_init('http://localhost:8080/adminAut/ativarproduto');
     
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
