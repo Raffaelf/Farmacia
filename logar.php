@@ -53,16 +53,38 @@
 
 		$_SESSION['session_farma'] = trim($token);
 
-		// Caso a caixa lembrar senha esteja marcada cria um cookie com validade de 7 dias
-		if($lembrete) {
-			setcookie('cookie_farma', $usuario.' '.$senha.' '.$lembrete, time() + (60 * 60 * 24 * 7));
-		}
+		//Verificando se a farmacia está ativa
+		$ch = curl_init('http://localhost:8080/administrador/administrador');
+    
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+			'Content-Type: application/json',
+			"Authorization:Bearer " . $_SESSION['session_farma']                                                                                
+		));                                                             
+																														
+		$response = curl_exec($ch);
+		curl_close($ch);
+	
+		// Convertendo json para objeto
+		$farmacia_logada = json_decode($response);
+	
+		if($farmacia_logada) {
 
-		header('Location: pages/index.php');
-		exit;
+			// Caso a caixa lembrar senha esteja marcada cria um cookie com validade de 7 dias
+			if($lembrete) {
+				setcookie('cookie_farma', $usuario.' '.$senha.' '.$lembrete, time() + (60 * 60 * 24 * 7));
+			}
+
+			header('Location: pages/index.php');
+			exit;
+		}
+		else {
+			unset($_SESSION['session_farma']);
+		}
 	}
-	else {
-		header('Location: pages/login.php?i=1');
-		exit;
-	}
+	
+	header('Location: pages/login.php?i=1');
+	exit;
+	
 ?>
