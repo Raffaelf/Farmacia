@@ -44,6 +44,21 @@
             $medicamento_selecionado = $response;
         }
     }
+
+    //Recuperando categorias
+    $categorias = array();
+
+    $ch = curl_init("http://localhost:8080/categoria");
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+        'Content-Type: application/json',                                                                         
+    ));                                                             
+                                                                                                                    
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    $categorias = json_decode($response);
 ?>
 <!DOCTYPE html>
 <html>
@@ -128,7 +143,7 @@
                         </div>
                     </header>
                 </div>
-                <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0; padding-top: 100px">
+                <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0; padding: 100px 0">
                     <form 
                     class="col-md-8 col-md-offset-2" 
                     action="<?php echo ($medicamento_selecionado ?  '../atualizar_medicamento.php' : '../cadastrar_medicamento.php');?>" 
@@ -165,9 +180,12 @@
                             <div class="col-sm-12">
                                 <label for="#categoria">Categorias</label>
                                 <select id="categoria" class="form-control" name="categoria" multiple>
-                                    <option value="">Controlado</option>
-                                    <option value="">Analgesico</option>
-                                    <option value="">Antibiotico</option>
+                                    <option disabled>Selecione...</option>
+                                    <?php foreach($categorias as $categoria): ?>
+                                
+                                        <option value="<?php echo $categoria->id;?>"><?php echo $categoria->nome;?></option>
+                                    
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -197,32 +215,28 @@
                 </div>
             </div>
         </div>
-    </div>
-             
+    </div>        
     
     <!-- Modal exclusao de elementos -->
     <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Esta ação requer confirmação</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p>Deseja realmente excluir o item <span id="nome-medicamento"></span></p>
-        </div>
-        <div class="modal-footer">
-            <a id="confirmar-exclusao" href="#" class="btn btn-primary">Confirmar</a>
-            <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-        </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Esta ação requer confirmação</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir o item <span id="nome-medicamento"></span></p>
+            </div>
+            <div class="modal-footer">
+                <a id="confirmar-exclusao" href="#" class="btn btn-primary">Confirmar</a>
+                <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+            </div>
+            </div>
         </div>
     </div>
-    </div>
-
-   
-
    
 </body>
 </html>

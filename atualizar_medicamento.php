@@ -78,24 +78,24 @@
          $filedata = $_FILES['imagem']['tmp_name'];
 
         // Cadastrando imagen no medicamento se houver
-        // if(!empty($filedata)) {
+        if(!empty($filedata)) {
 
-        //     // Recuperando o id
-        //     $id = $_POST['id'];
+            // Recuperando o id
+            $id = $_POST['id'];
 
-        //     $file = ['file' => new \CURLFile($filedata, 'image/jpg', $filename)];
+            $file = ['file' => new \CURLFile($filedata, 'image/jpg', $filename)];
 
-        //     $ch = curl_init("http://localhost:8080/imagem/admin/addimgprod/{$id}");
+            $ch = curl_init("http://localhost:8080/imagem/admin/addimgprod/{$id}");
     
-        //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        //     curl_setopt($ch, CURLOPT_POST, 1);
-        //     curl_setopt($ch, CURLOPT_POSTFIELDS, $file);                                                                  
-        //     curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data"));                                                                                                              
-        //     curl_setopt($ch, CURLOPT_HEADER, 1); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $file);                                                                  
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: multipart/form-data"));                                                                                                              
+            curl_setopt($ch, CURLOPT_HEADER, 1); 
             
-        //     $response = curl_exec($ch);
-        //     curl_close($ch);   
-        // }
+            $response = curl_exec($ch);
+            curl_close($ch);   
+        }
         header('Location: pages/index.php?i=s3');
         exit;
     }

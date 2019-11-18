@@ -116,7 +116,8 @@
                         </div>
                     </header>
                 </div>
-                <div class="row" style="padding-top: 10px;">
+
+                <div class="row" style="padding: 20px 0">
                     <div class="container">
                         <p class="alert alert-success" role="alert" <?php echo (isset($_GET['i']) && $_GET['i'] == 's1' ? '' : 'style="display:none"'); ?>>
                             Medicamento cadastrado com sucesso!
@@ -151,7 +152,7 @@
                             <button data="e4">X</button>
                         </p>
                         
-                        <div class="row col-md-12 custyle" style="margin: 0">
+                        <div class="row col-lg-12 custyle" style="margin: 0">
                             <ul class="nav nav-tabs">
                                 <li id="frameAtivos" role="presentation" class="active"><a href="">Ativos</a></li>
                                 <li id="frameDesativos" role="presentation" class=""><a href="">Desativados</a></li>
