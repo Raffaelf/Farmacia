@@ -179,7 +179,7 @@
                         <div class="row">
                             <div class="col-sm-12">
                                 <label for="#categoria">Categorias</label>
-                                <select id="categoria" class="form-control" name="categoria" multiple>
+                                <select id="categoria" class="form-control" name="categoria[]" multiple>
                                     <option disabled>Selecione...</option>
                                     <?php foreach($categorias as $categoria): ?>
                                 
@@ -221,19 +221,19 @@
     <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Esta ação requer confirmação</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Deseja realmente excluir o item <span id="nome-medicamento"></span></p>
-            </div>
-            <div class="modal-footer">
-                <a id="confirmar-exclusao" href="#" class="btn btn-primary">Confirmar</a>
-                <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-            </div>
+                <div class="modal-header">
+                    <h4 class="modal-title">Esta ação requer confirmação</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Deseja realmente excluir o item <span id="nome-medicamento"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <a id="confirmar-exclusao" href="#" class="btn btn-primary">Confirmar</a>
+                    <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
+                </div>
             </div>
         </div>
     </div>

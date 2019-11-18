@@ -30,13 +30,21 @@
         !isset($_POST['registro_anvisa']) &&
         !isset($_POST['principio_ativo']) &&
         !isset($_POST['forma_farmaceutica']) &&
-        !isset($_POST['detentor_registro'])
+        !isset($_POST['detentor_registro']) &&
+        !isset($_POST['categoria'])
     ) {
 
         header('Location: pages/index.php?i=4');
         exit;
     }
     
+    //Recuperando categorias selecionadas
+    $categorias = array();
+
+    foreach($_POST['categoria'] as $categoria) {
+       $categorias[] = array("id" => $categoria);
+    }
+
     // Montando array com dados
     $dados = array(
         "nome" => $_POST['nome'],
@@ -45,12 +53,15 @@
         "formaFarmaceutica" => $_POST['forma_farmaceutica'],
         "registroAnvisa" => $_POST['registro_anvisa'],
         "detentorRegistro" => $_POST['detentor_registro'],
+        "categoria" => $categorias,
         "preco" => $_POST['preco'],
         "quantidade" => $_POST['quantidade']
     );
   
     // Convertendo o array em json
     $dadosJSON = json_encode($dados); 
+
+    echo $dadosJSON;
      
     // Montando a requisição                                                                                                                
     $ch = curl_init('http://localhost:8080/adminAut/produto');                                                                      
