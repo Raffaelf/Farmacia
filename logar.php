@@ -16,35 +16,9 @@
 
 	// Cria um array com dados do login e converte para JSON
 	$login = array('login' => $usuario, 'senha' => $senha);
-	$loginJSON = json_encode($login);  
+	$json = json_encode($login);  
 
-	// Configurando a requisicao
-	$ch = curl_init('http://localhost:8080/administrador/autenticar');                                                                      
-	
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $loginJSON);                                                                  
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_VERBOSE, 1);
-	curl_setopt($ch, CURLOPT_HEADER, 1);
-	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);                                                                      
-	curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-		'Content-Type: application/json',                                                                                
-		'Content-Length: ' . strlen($loginJSON))                                                                       
-	);                                                                                                                   
-	
-	$response = curl_exec($ch);
-	
-	// Extraindo o header da resposta em STRING da API
-	$headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-	$header = substr($response, 0, $headerSize);
-
-	/* 
-	* Quebrando a String do header para pegar o STATOS da requisicao e o TOKEN
-	* o resultado é um array
-	* onde na posicao 1 terá o STATUS
-	* e na posicao 4 o TOKEN, caso a requisiçao tenha STAUTS 200
-	*/
-	$header = explode(' ', $header);
+	require_once 'autenticar.php';
 
 	if($header[1] == "200") {
 			
@@ -52,6 +26,7 @@
 		$token = str_replace('Content-Length:', "", $token[0]);
 
 		$_SESSION['session_farma'] = trim($token);
+		$_SESSION['autenticacao'] = $usuario . " " . $senha;
 
 		//Verificando se a farmacia está ativa
 		$ch = curl_init('http://localhost:8080/administrador/administrador');
@@ -81,6 +56,7 @@
 		}
 		else {
 			unset($_SESSION['session_farma']);
+			unset($_SESSION['autenticacao']);
 		}
 	}
 	

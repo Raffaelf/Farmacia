@@ -21,6 +21,34 @@
 
     // Convertendo json para objeto
     $farmacia_logada = json_decode($response);
+
+    /* Esta verificação serve para ver se o token da farmacia ainda é valido
+     * caso não seja o usuário é deslogado por inatividade 
+     */
+    if(!$farmacia_logada) {
+        unset($_SESSION['session_farma']);
+        unset($_SESSION['autenticacao']);
+        header('Location: login.php?t=1');
+        exit;
+    }
+
+    // Renovando token
+    $dadosAutenticacao = explode(' ', $_SESSION['autenticacao']);
+    $auth = array(
+        "login" => $dadosAutenticacao[0],
+        "senha" => $dadosAutenticacao[1]
+    );
+
+    $json = json_encode($auth);
+    
+    require_once '../autenticar.php';
+
+    if($header[1] == "200") {
+        $token = explode(' ', $header[4]);
+		$token = str_replace('Content-Length:', "", $token[0]);
+
+		$_SESSION['session_farma'] = trim($token);
+    }
     
     // Buscar todos os medicamentos para listagem
     require_once '../buscar_medicamentos.php';
@@ -102,7 +130,7 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span><?php echo $farmacia_logada->nome;?></span>
+                                                    <span><?php echo $farmacia_logada->nome;?></span><br>
                                                     <a href="farmacia.php" style="color:#333">Minha Conta</a>
                                                     <div class="divider">
                                                     </div>

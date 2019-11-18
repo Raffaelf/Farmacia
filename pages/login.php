@@ -42,6 +42,10 @@
 			Cadastro Realizado com sucesso!
 			<button>X</button>
 		</p>
+		<p class="alert alert-warning message" role="alert" <?php echo ((isset($_GET['t']) && $_GET['t'] == 1) ? '' : 'style="display:none"');?>>
+			Você foi deslogado por inatividade!
+			<button>X</button>
+		</p>
 
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
@@ -166,11 +170,21 @@
 	</div>
 
 	<script>
-		var fecharMenssagem = document.querySelector('.message button');
+		const fecharMenssagem = document.querySelectorAll('.message button');
+		const menssagens = document.querySelectorAll('.message');
 
-		fecharMenssagem.addEventListener('click', () => {
-			document.querySelector('.message').setAttribute('style', 'display:none');
-		});
+		for (let i = 0; i < fecharMenssagem.length; i++) {
+			fecharMenssagem[i].addEventListener('click', function(){
+				fecharAvisos();
+			});
+		}
+
+		function fecharAvisos () {
+			
+			for (let i = 0; i < menssagens.length; i++) {
+				menssagens[i].setAttribute('style', 'display:none');
+			}
+		}
 	</script>
 </body>
 </html>

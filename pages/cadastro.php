@@ -21,6 +21,34 @@
 
     // Convertendo json para objeto
     $farmacia_logada = json_decode($response);
+
+    /* Esta verificação serve para ver se o token da farmacia ainda é valido
+    * caso não seja o usuário é deslogado por inatividade 
+    */
+    if(!$farmacia_logada) {
+        unset($_SESSION['session_farma']);
+        unset($_SESSION['autenticacao']);
+        header('Location: login.php?t=1');
+        exit;
+    }
+    
+    // Renovando token
+    $dadosAutenticacao = explode(' ', $_SESSION['autenticacao']);
+    $auth = array(
+        "login" => $dadosAutenticacao[0],
+        "senha" => $dadosAutenticacao[1]
+    );
+
+    $json = json_encode($auth);
+
+    require_once '../autenticar.php';
+
+    if($header[1] == "200") {
+        $token = explode(' ', $header[4]);
+        $token = str_replace('Content-Length:', "", $token[0]);
+
+        $_SESSION['session_farma'] = trim($token);
+    }
     
     $medicamento_selecionado = null;
     if(isset($_GET['id'])) {
@@ -129,7 +157,7 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <div class="navbar-content">
-                                                    <span><?php echo $farmacia_logada->nome;?></span>
+                                                    <span><?php echo $farmacia_logada->nome;?></span><br>
                                                     <a href="farmacia.php" style="color:#333">Minha Conta</a>
                                                     <div class="divider">
                                                     </div>
@@ -143,59 +171,86 @@
                         </div>
                     </header>
                 </div>
-                <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0; padding: 100px 0">
+                <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0; padding: 20px 0 80px 0">
+                    
                     <form 
-                    class="col-md-8 col-md-offset-2" 
+                    class="col-md-10 col-md-offset-1" 
                     action="<?php echo ($medicamento_selecionado ?  '../atualizar_medicamento.php' : '../cadastrar_medicamento.php');?>" 
                     method="post"
                     enctype="multipart/form-data">
+
+                        <p style="font-size: 16px" class="alert alert-info">
+                            Todos os itens com ' * ' posterior ao nome do campo são itens de preenchimento obrigatório.
+                        </p>
+
                         <input type="text" name="id" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->id : '');?>" hidden>
+                        
                         <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->nome : '');?>" class="form-control" type="text" placeholder="Nome do medicamento" name="nome" required>
+                            <label for="nome">Nome do medicamento*</label>
+                            <input id="nome" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->nome : '');?>" class="form-control" type="text" placeholder="Digite o nome" name="nome" required>
                         </div>
+
                         <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->principioAtivo : '');?>" class="form-control" type="text" placeholder="Princípio Ativo" name="principio_ativo">
+                            <label for="ativo">Princípio Ativo*</label>
+                            <input id="ativo" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->principioAtivo : '');?>" class="form-control" type="text" placeholder="Entre com os dados" name="principio_ativo">
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->registroAnvisa : '');?>" class="form-control" type="number" placeholder="Registro Anvisa" name="registro_anvisa">
+                            <div class="col-sm-6 form-group">
+                                <label for="anvisa">Reginstro da Anvisa*</label>
+                                <input id="anvisa" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->registroAnvisa : '');?>" class="form-control" type="number" placeholder="Número do registro" name="registro_anvisa">
                             </div>
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->detentorRegistro : '');?>" class="form-control" type="text" placeholder="Detentor Registro" name="detentor_registro">
+                            <div class="col-sm-6 form-group">
+                                <label for="detentor">Detentor do Registro*</label>
+                                <input id="detentor" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->detentorRegistro : '');?>" class="form-control" type="text" placeholder="Nome do detentor" name="detentor_registro">
                             </div>
-                        </div><br>
+                        </div>
                         <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->concentracao : '');?>" class="form-control" type="text" placeholder="Concentração" name="concentracao">
+                            <label for="concentracao">Concentração*</label>
+                            <input id="concentracao" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->concentracao : '');?>" class="form-control" type="text" placeholder="Digite os dados" name="concentracao">
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->preco : '');?>" class="form-control" type="number" placeholder="Preço" name="preco">
+                            <div class="col-sm-6 form-group">
+                                <label for="preco">Preço*</label>
+                                <input id="preco" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->preco : '');?>" class="form-control" type="number" placeholder="R$ 0,00" name="preco" step="0.010">
                             </div>
-                            <div class="col-sm-6">
-                                <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->quantidade : '');?>" class="form-control" type="number" placeholder="Quantidade" name="quantidade">
+                            <div class="col-sm-6 form-group">
+                                <label for="quantidade">Quantidade*</label>
+                                <input id="quantidade" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->quantidade : '');?>" class="form-control" type="number" placeholder="Ex: 1" name="quantidade">
                             </div>
                         </div>
-                        <br>
+            
                         <div class="row">
-                            <div class="col-sm-12">
-                                <label for="#categoria">Categorias</label>
+                            <div class="col-sm-12 form-group">
+                                <label for="categoria">Categorias*</label>
                                 <select id="categoria" class="form-control" name="categoria[]" multiple required>
-                                    <option disabled>Selecione...</option>
+                                    <option disabled>Selecione uma ou mais categorias</option>
                                     <?php foreach($categorias as $categoria): ?>
                                 
-                                        <option value="<?php echo $categoria->id;?>"><?php echo $categoria->nome;?></option>
+                                        <option 
+                                            value="<?php echo $categoria->id;?>"
+                                            <?php 
+                                                if($medicamento_selecionado) {
+                                                    foreach($medicamento_selecionado->categoria as $cat) {
+                                                        if ($cat->id == $categoria->id){
+                                                            echo "selected";
+                                                        }
+                                                    }
+                                                }
+                                            ?>><?php echo $categoria->nome;?>
+                                        </option>
                                     
                                     <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
-                        <br>
+                  
                         <div class="form-group">
-                            <input value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->formaFarmaceutica : '');?>" class="form-control" type="text" placeholder="Forma Farmaceutica" name="forma_farmaceutica">
+                            <label for="forma">Forma Farmaceutica*</label>
+                            <input id="forma" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->formaFarmaceutica : '');?>" class="form-control" type="text" placeholder="Informações sobre a forma farmaceutica" name="forma_farmaceutica">
                         </div>
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Imagem</span>
+                                <span class="input-group-text"><b>Imagem</b></span>
                             </div>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="inputGroupFile01" name="imagem">
@@ -204,7 +259,7 @@
                         <br>
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="submit" value="Salvar" class="btn btn-primary btn-block">
+                                <input type="submit" value="Salvar" class="btn btn-success btn-block">
                             </div>
                             <div class="col-md-6">
                                 <input type="reset" value="Limpar" class="btn btn-default btn-block">
@@ -237,6 +292,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('preco').addEventListener('change', function(){
+            this.value = parseFloat(this.value).toFixed(2);
+        });
+    </script>
    
 </body>
 </html>
