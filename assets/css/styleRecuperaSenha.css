@@ -58,3 +58,15 @@ form input {
 .container a:hover {
     opacity: 1;
 }
+
+.btn-green {
+    background: #009488;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-green:hover {
+    background: #00645c;
+    color: #fff;
+}

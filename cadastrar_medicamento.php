@@ -45,6 +45,14 @@
        $categorias[] = array("id" => $categoria);
     }
 
+    //formatando preco para ser salvo
+    $preco = $_POST['preco'];
+    
+    if( substr($preco, -3, 1) == "," ) {
+        $preco = str_replace(".", "", $preco);
+        $preco = str_replace(",", ".", $preco);
+    }
+
     // Montando array com dados
     $dados = array(
         "nome" => $_POST['nome'],
@@ -54,14 +62,12 @@
         "registroAnvisa" => $_POST['registro_anvisa'],
         "detentorRegistro" => $_POST['detentor_registro'],
         "categoria" => $categorias,
-        "preco" => $_POST['preco'],
+        "preco" => $preco,
         "quantidade" => $_POST['quantidade']
     );
   
     // Convertendo o array em json
     $dadosJSON = json_encode($dados); 
-
-    echo $dadosJSON;
      
     // Montando a requisição                                                                                                                
     $ch = curl_init('http://localhost:8080/adminAut/produto');                                                                      

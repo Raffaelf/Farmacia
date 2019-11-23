@@ -106,7 +106,7 @@
 <body class="home">
     <div class="container-fluid display-table">
         <div class="row display-table-row">
-            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation" >
                 <div class="logo">
                     <a hef="admin.html">
                         <img src="https://consultaremedios.com.br/assets/logos/logo_default-17ab6834258c29870f364a777d12cca917f79ff88aceb6b9c4f3b89ac8c0a53f.svg" alt="merkery_logo" class="hidden-xs hidden-sm">
@@ -130,7 +130,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+            <div class="col-md-10 col-sm-11 display-table-cell v-align withe">
                 <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
                 <div class="row">
                     <header>
@@ -171,7 +171,7 @@
                         </div>
                     </header>
                 </div>
-                <div class="row col-md-12 col-md-offset-2 custyle" style="margin: 0; padding: 20px 0 80px 0">
+                <div class="row col-md-12 col-md-offset-2 custyle withe" style="margin: 0; padding: 20px 0 80px 0">
                     
                     <form 
                     class="col-md-10 col-md-offset-1" 
@@ -211,7 +211,7 @@
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label for="preco">Preço*</label>
-                                <input id="preco" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->preco : '');?>" class="form-control" type="number" placeholder="R$ 0,00" name="preco" step="0.010">
+                                <input id="preco" onKeyPress="return(moeda(this,'.',',',event))" value="<?php echo ($medicamento_selecionado ? $medicamento_selecionado->preco : '');?>" class="form-control" type="text" placeholder="R$ 0,00" name="preco">
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label for="quantidade">Quantidade*</label>
@@ -259,10 +259,10 @@
                         <br>
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="submit" value="Salvar" class="btn btn-success btn-block">
+                                <input type="submit" value="Salvar" class="btn btn-green btn-block">
                             </div>
                             <div class="col-md-6">
-                                <input type="reset" value="Limpar" class="btn btn-default btn-block">
+                                <input type="reset" value="Limpar" class="btn btn-withe btn-block">
                             </div>
                         </div>
                       
@@ -271,33 +271,7 @@
             </div>
         </div>
     </div>        
-    
-    <!-- Modal exclusao de elementos -->
-    <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Esta ação requer confirmação</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Deseja realmente excluir o item <span id="nome-medicamento"></span></p>
-                </div>
-                <div class="modal-footer">
-                    <a id="confirmar-exclusao" href="#" class="btn btn-primary">Confirmar</a>
-                    <a class="btn btn-default" data-dismiss="modal">Cancelar</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        document.getElementById('preco').addEventListener('change', function(){
-            this.value = parseFloat(this.value).toFixed(2);
-        });
-    </script>
-   
+    <script src="../assets/js/mascaraMoeda.js"></script> 
 </body>
 </html>

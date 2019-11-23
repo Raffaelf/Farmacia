@@ -96,7 +96,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-8 col-lg-8 col-sm-11 display-table-cell v-align">
+            <div class="col-md-8 col-lg-8 col-sm-11 display-table-cell v-align withe">
                 <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
                 <div class="row">
                     <header>
@@ -121,7 +121,7 @@
                             </div> -->
                             <h3>Todos os medicamentos</h3>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-5 col-lg-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right">
                                     <li class="dropdown">
@@ -180,7 +180,7 @@
                             <button data="e4">X</button>
                         </p>
                         
-                        <div class="row col-lg-12 custyle" style="margin: 0">
+                        <div class="row col-lg-12 col-md-12" style="margin: 0">
                             <ul class="nav nav-tabs">
                                 <li id="frameAtivos" role="presentation" class="active"><a href="">Ativos</a></li>
                                 <li id="frameDesativos" role="presentation" class=""><a href="">Desativados</a></li>
@@ -188,12 +188,18 @@
                             <br>
 
                             <!-- Tabela de itens ativos -->
-                            <table id="tableAtivos" class="table table-striped table-responsible custab">
+                            <div class="table-responsive">
+
+                            <table id="tableAtivos" class="table table-bordered table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr class="active">
                                         <th>Foto</th>
                                         <th>Nome</th>
-                                        <th>Forma Farmaceutica</th>
+                                        <th>Forma</th>
+                                        <th>Concentração</th>
+                                        <th>Detentor</th>
+                                        <th>Anvisa</th>
+                                        <th>Principio Ativo</th>
                                         <th>Preço</th>
                                         <th>Quantidade</th>
                                         <th class="text-center">Action</th>
@@ -218,31 +224,46 @@
                                         </td>
                                         <td><?php echo $medicamento->nome; ?></td>
                                         <td><?php echo $medicamento->formaFarmaceutica; ?></td>
-                                        <td><?php echo $medicamento->preco; ?></td>
+                                        <td><?php echo $medicamento->concentracao; ?></td>
+                                        <td><?php echo $medicamento->detentorRegistro; ?></td>
+                                        <td><?php echo $medicamento->registroAnvisa; ?></td>
+                                        <td><?php echo $medicamento->principioAtivo; ?></td>
+                                        <td><?php echo number_format($medicamento->preco, 2, ",", "."); ?></td>
                                         <td><?php echo $medicamento->quantidade; ?></td>
                                         <td class="text-center">
-                                            <a class='btn btn-primary btn-xs' href="cadastro.php?id=<?php echo $medicamento->id;?>"><span class="glyphicon glyphicon-edit"></span> Editar</a> 
+                                            <a 
+                                                class='btn btn-primary btn-xs' 
+                                                href="cadastro.php?id=<?php echo $medicamento->id;?>"
+                                                style="width: 70px; margin-bottom: 3px">
+                                                    <span class="glyphicon glyphicon-edit"></span> Editar
+                                            </a> 
                                             <a 
                                                 href="#"
                                                 id="<?php echo $medicamento->id; ?>" 
                                                 data-target="#exampleModal"
                                                 value="<?php echo $medicamento->nome; ?>" 
                                                 class="deletar btn btn-danger btn-xs"
-                                                data-toggle="modal">
+                                                data-toggle="modal"
+                                                style="width: 70px">
                                                     <span class="glyphicon glyphicon-remove"></span> Deletar</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            </div>
 
                             <!-- Tabela de itens desativados -->
-                            <table id="tableDesativos" class="table table-striped table-responsible custab" style="display:none">
+                            <table id="tableDesativos" class="table table-bordered table-responsible custab" style="display:none">
                                 <thead>
-                                    <tr>
-                                        <th>Foto</th>
+                                    <tr class="active">
+                                    <th>Foto</th>
                                         <th>Nome</th>
-                                        <th>Forma Farmaceutica</th>
+                                        <th>Forma</th>
+                                        <th>Concentração</th>
+                                        <th>Detentor</th>
+                                        <th>Anvisa</th>
+                                        <th>Principio Ativo</th>
                                         <th>Preço</th>
                                         <th>Quantidade</th>
                                         <th class="text-center">Action</th>
@@ -267,10 +288,14 @@
                                         </td>
                                         <td><?php echo $medicamento->nome; ?></td>
                                         <td><?php echo $medicamento->formaFarmaceutica; ?></td>
-                                        <td><?php echo $medicamento->preco; ?></td>
+                                        <td><?php echo $medicamento->concentracao; ?></td>
+                                        <td><?php echo $medicamento->detentorRegistro; ?></td>
+                                        <td><?php echo $medicamento->registroAnvisa; ?></td>
+                                        <td><?php echo $medicamento->principioAtivo; ?></td>
+                                        <td><?php echo number_format($medicamento->preco, 2, ",", "."); ?></td>
                                         <td><?php echo $medicamento->quantidade; ?></td>
                                         <td class="text-center">
-                                            <a class='btn btn-success btn-md' href="../ativar_medicamento.php?id=<?php echo $medicamento->id;?>">
+                                            <a class='btn btn-green btn-md' href="../ativar_medicamento.php?id=<?php echo $medicamento->id;?>">
                                                 <span class="glyphicon glyphicon-edit"></span> 
                                                 Ativar
                                             </a> 

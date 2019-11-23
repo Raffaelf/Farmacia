@@ -97,7 +97,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-primary btn-block" value="Entrar">
+												<input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-green btn-block" value="Entrar">
 											</div>
 										</div>
 									</div>
@@ -155,7 +155,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-success btn-block" value="Cadastrar">
+												<input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-green btn-block" value="Cadastrar">
 											</div>
 										</div>
 									</div>

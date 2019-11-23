@@ -6,6 +6,10 @@ body {
     height: 100vh;
 }
 
+.withe {
+    background: #fafafa;
+}
+
 a:focus,a:hover,a{
     outline:none;
     text-decoration: none;
@@ -29,7 +33,7 @@ li,ul{
 .login-header {
     display: inline-block;
     width: 100%;
-    background: #0e1a35;
+    background: #018577;
 }
 
 .login-signup {
@@ -90,7 +94,7 @@ li,ul{
 }
 
 .login-header .nav-tabs > li.active {
-    border-bottom: 6px solid #5584ff;
+    border-bottom: 6px solid #2dff3e;
 }
 
 .login-inner h1 {
@@ -210,7 +214,7 @@ p.alert button {
 }
 
 #navigation {
-    background: #0e1a35;
+    background: #018577;
 }
 
 #navigation {
@@ -280,6 +284,28 @@ p.alert button {
     position: absolute;
     top: 12px;
     width: 12px;
+}
+
+.btn-green {
+    background: #009488;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn-green:hover {
+    background: #00645c;
+    color: #fff;
+}
+
+.btn-withe {
+    font-weight: bold;
+    text-transform: uppercase;
+    background: rgb(223, 223, 223);
+}
+
+.btn-withe:hover {
+    background: rgb(176, 182, 192);
 }
 
 .add-project:hover {
@@ -389,8 +415,8 @@ header {
 }
 
 .navi a {
-    border-bottom: 1px solid #0d172e;
-    border-top: 1px solid #0d172e;
+    border-bottom: 1px solid #018577;
+    border-top: 1px solid #018577;
     color: #ffffff;
     display: block;
     font-size: 17px;
@@ -405,14 +431,14 @@ header {
 }
 
 .navi .active a {
-    background: #122143;
-    border-left: 5px solid #5584ff;
+    background: #005c53;
+    border-left: 5px solid #00d3be;
     padding-left: 15px;
 }
 
 .navi a:hover {
-    background: #122143 none repeat scroll 0 0;
-    border-left: 5px solid #5584ff;
+    background: #00423c none repeat scroll 0 0;
+    border-left: 5px solid #00d3be;
     display: block;
     padding-left: 15px;
 }

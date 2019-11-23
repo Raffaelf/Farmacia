@@ -92,7 +92,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+            <div class="col-md-10 col-sm-11 display-table-cell v-align withe">
                 <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
                 <div class="row">
                     <header>
@@ -188,7 +188,7 @@
                             <div class="row">
                                 <div class="col-sm-9"></div>
                                 <div class="col-sm-3">
-                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-success btn-block" value="Salvar Alterações" style="display:none" />
+                                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-green btn-block" value="Salvar Alterações" style="display:none" />
                                 </div>
                             </div>
                         </div>
@@ -276,6 +276,8 @@
             window.location = '../excluir_farmacia.php';
         });
     </script>
+
+    <script src="../assets/js/mascara.min.js"></script>
    
 </body>
 </html>

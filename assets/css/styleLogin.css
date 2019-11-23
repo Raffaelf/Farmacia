@@ -22,11 +22,10 @@ body {
 	font-weight: 900;
 }
 
-/* .panel-login {
-	-webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-	-moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
-	box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.2);
-} */
+.panel-login {
+	
+	background: #fafafa;
+}
 
 .panel-login>.panel-heading {
 	color: #00415d;
@@ -42,9 +41,10 @@ body {
 	-webkit-transition: all 0.4s linear;
 	-moz-transition: all 0.4s linear;
 	transition: all 0.4s linear;
+	outline: none;
 }
 .panel-login>.panel-heading a.active{
-	color: #67d328;
+	color: #00aa9c;
 	font-size: 18px;
 }
 .panel-login>.panel-heading hr{
@@ -117,4 +117,26 @@ body {
 	color: #fff;
 	background-color: #1CA347;
 	border-color: #1CA347;
+}
+
+.btn-green {
+	background: #009488;
+	color: #fff;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.btn-green:hover {
+	background: #00645c;
+	color: #fff;
+}
+
+.btn-withe {
+	font-weight: bold;
+	text-transform: uppercase;
+	background: rgb(223, 223, 223);
+}
+
+.btn-withe:hover {
+	background: rgb(176, 182, 192);
 }

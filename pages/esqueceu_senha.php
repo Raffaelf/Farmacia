@@ -66,7 +66,7 @@
                 <label for="email">Digite seu email</label>
                 <input class="form-control" id="email" type="email" placeholder="exemplo@email.com" name="email" required>
             </div>
-            <input class="btn btn-primary" type="submit" value="Enviar">
+            <input class="btn btn-green" type="submit" value="Enviar">
         </form>
         <a href="login.php">Voltar ao login</a>
     </div>
