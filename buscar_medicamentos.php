@@ -4,29 +4,75 @@
         exit;
     } 
 
-    $ch = curl_init('http://localhost:8080/administrador/listarprodutos');
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
-        'Content-Type: application/json',
-        "Authorization:Bearer " . $_SESSION['session_farma']                                                                               
-    ));                                                             
-                                                                                                                    
-    $response = curl_exec($ch);
-    curl_close($ch);
+    $base_url = "http://localhost:8080";
+    $url_complemento = "/administrador/listarprodutos";
 
-    $response = json_decode($response);
+    // Busca por nome ou principio ativo
+    if(isset($_GET['busca']) && !empty($_GET['busca'])) {
+        
+        $nome = $_GET['busca'];
+        $nome = str_replace(' ', "%20", $nome);
+        $url_complemento = "/menor/produto/?nome={$nome}";
+        
+        $ch = curl_init($base_url.$url_complemento);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',
+            "Authorization:Bearer " . $_SESSION['session_farma']                                                                               
+        )); 
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $response = json_decode($response);
+       
+        if(!$response) {
+            $url_complemento = "/menor/produto/?principioAtivo={$nome}";
+            
+            $ch = curl_init($base_url.$url_complemento);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+                'Content-Type: application/json'                                                                            
+            )); 
+
+            $resposta = curl_exec($ch);
+            curl_close($ch);
+
+            $response = json_decode($resposta);
+
+        }
+    }
+    else {
+        $ch = curl_init($base_url.$url_complemento);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");                                                                
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+            'Content-Type: application/json',
+            "Authorization:Bearer " . $_SESSION['session_farma']                                                                               
+        ));                                                             
+                                                                                                                        
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $response = json_decode($response);
+    }
+
+
     $medicamentos_ativos = array();
     $medicamentos_desativados = array();
 
     // Preenche array com os medicamentos da farmacia
-    foreach($response as $medicamento) {
-
-        if(!$medicamento->removedAt) {
-            array_push($medicamentos_ativos, $medicamento);
-        }
-        else {
-            array_push($medicamentos_desativados, $medicamento);
+    if($response) {
+        foreach($response as $medicamento) {
+    
+            if(!$medicamento->removedAt) {
+                array_push($medicamentos_ativos, $medicamento);
+            }
+            else {
+                array_push($medicamentos_desativados, $medicamento);
+            }
         }
     }
 

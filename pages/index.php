@@ -49,9 +49,9 @@
 
 		$_SESSION['session_farma'] = trim($token);
     }
-    
+
     // Buscar todos os medicamentos para listagem
-    require_once '../buscar_medicamentos.php';
+    require_once '../buscar_medicamentos.php';    
 ?>
 <!DOCTYPE html>
 <html>
@@ -111,35 +111,39 @@
                                     </button>
                                 </div>
                             </nav>
-
-                            <!-- Campo de busca
-                            <div class="search hidden-sm">
-                                <form method="get">
-                                    <button type="submit"><img src="../assets/img/search.png" alt=""></button>
-                                    <input type="text" placeholder="Buscar Medicamento" name="busca" id="search">
-                                </form>
-                            </div> -->
-                            <h3>Todos os medicamentos</h3>
+                            <div style="width: 100%;display:flex; align-items:center; justify-content:space-between">
+                                <h3>Todos os medicamentos</h3>
+                            </div>
                         </div>
                         <div class="col-md-5 col-lg-5">
-                            <div class="header-rightside">
-                                <ul class="list-inline header-top pull-right">
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="../assets/img/user-icon.png" alt="user">
-                                            <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <div class="navbar-content">
-                                                    <span><?php echo $farmacia_logada->nome;?></span><br>
-                                                    <a href="farmacia.php" style="color:#333">Minha Conta</a>
-                                                    <div class="divider">
+                            <div style="width: 100%;display:flex; align-items:center; justify-content:flex-end">
+                               
+                                <!-- Campo de busca -->
+                                <div class="search">
+                                    <form method="get">
+                                        <button type="submit"><img src="../assets/img/search.png" alt=""></button>
+                                        <input type="text" placeholder="Buscar Medicamento" name="busca" id="search">
+                                    </form>
+                                </div>
+                                <div class="header-rightside">
+                                    <ul class="list-inline header-top pull-right">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><img src="../assets/img/user-icon.png" alt="user">
+                                                <b class="caret"></b></a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <div class="navbar-content">
+                                                        <span><?php echo $farmacia_logada->nome;?></span><br>
+                                                        <a href="farmacia.php" style="color:#333">Minha Conta</a>
+                                                        <div class="divider">
+                                                        </div>
+                                                        <a href="../sair.php" class="btn btn-sm btn-block btn-primary active">Sair</a>
                                                     </div>
-                                                    <a href="../sair.php" class="btn btn-sm btn-block btn-primary active">Sair</a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </header>

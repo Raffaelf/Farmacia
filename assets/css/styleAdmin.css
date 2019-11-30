@@ -379,21 +379,29 @@ p.alert button {
 
 .search form {
     display: flex;
+    margin-right: 20px;
 }
 
 .search input {
     border: none;
+    border-radius: 5px;
     font-size: 15px;
-    padding: 15px 9px;
+    padding: 10px 10px;
     width: 100%;
-    color: #8492af;
+    color: #444;
+    background: #e9ebf0;
     outline: none;
+}
+
+.search input::placeholder {
+    color: #666;
 }
 
 .search button {
     background: none;
     border: 0;
     outline: none;
+    cursor: pointer;
 }
 
 header {
